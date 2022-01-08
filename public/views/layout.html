@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Justin Can have Ideas Too</title>
+  <meta name="description" content="Home page">
+  <meta name="Justin" content="SitePoint">
+
+  <!-- need text/css so server knows its a css file
+	href is based of stated static file folder public -->
+  <link type="text/css" rel="stylesheet" media="screen and (min-width:700px)"href="/css/mainDesktop.css">
+  <link type="text/css" rel="stylesheet" media="screen and (max-width:699px)"href="/css/mainMobile.css">
+
+  <!-- allows for each page to insert its own css file superseeding the main file -->
+  <link type="text/css" rel="stylesheet" media="screen and (min-width:700px)"href="/css/{{cssDesktop}}">
+  <link type="text/css" rel="stylesheet" media="screen  and (max-width:699px)"href="/css/{{cssMobile}}">
+  <h1>{{title}}</h1>
+</head>
+<body>
+   {% block content %}
+
+   {% endblock %}
+</body>
+<footer>
+  <div class="links">
+    <a href="expense"><button type="button" name="expense">Expenses</button></a>
+    <a href="/fund"><button type="button" name="fund">Funds</button></a>
+    <a href="/income"><button type="button" name="income">Income</button></a>
+    <a href="/"><button type="button" name="home ">Home</button></a>
+  </div>
+</footer>
+</html>

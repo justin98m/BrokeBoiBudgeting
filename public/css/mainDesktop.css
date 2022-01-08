@@ -1,0 +1,22 @@
+html{background-color: #f7af6a;}
+.links{
+  text-align: center;
+  padding-top: 20px;
+  border: solid white;
+  margin-top: 5%
+}
+.links button{
+  width: 310px;
+  border: solid blue;
+  margin-left:40px;
+  margin-right: 60px;
+  height: 65px;
+  font-size: 36px;
+
+}
+.links button:hover{
+ background-color: #9dff47;
+}
+h1{
+  text-align: center;
+}

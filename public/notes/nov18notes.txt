@@ -1,0 +1,43 @@
+Most recently I
+-display fund information from a db
+-added view fund front end
+-sent view fund fund Id information from Fund page
+-made fund page look pretty on mobile and desktop
+-relearned that node will not block code while waiting for sql callback like I thought it would
+-Created expense and Income Tables
+
+
+
+-What I want for Next Time
+  -git readines
+    -add gitignore
+    -comment code better
+  -view fund functionality
+    -read expense table to find expenses associated with selected fund
+  -add income functionaility
+    -open a pop up that one can write html in
+  -add expense form functionality
+    -ensure data is being sent to db correctly
+    -add post form for home page
+    -redirect to page that one initally started from
+    -mobile styling 
+  -Make an error page for bad sql
+
+  -Category Functions
+    -function to sort a group of tuples with dates & ids sorted by date
+    -use date function to add Date to any type of category
+    -
+
+
+
+
+
+
+
+   Eventually
+   -Sort Bars
+    -Sorts by
+      -dates
+      -Cost
+      -*Alphabetical
+    -

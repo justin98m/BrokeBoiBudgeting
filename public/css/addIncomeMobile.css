@@ -1,0 +1,90 @@
+#incomeForm{
+  border: solid 2px;
+}
+#availableCapitolContainer{
+  border: solid 2px white;
+  margin-left: 10%;
+  text-align: center;
+  margin-right: 10%;
+}
+#availableCapitolTitle{
+  font-size: 18px;
+  margin: 0;
+}
+#availableCapitol{
+  font-size: 20px;
+  color: #5b8f3c;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+form{
+  margin-left: 4%;
+  border: solid blue 2px;
+}
+#incomeBar{
+  margin: 3px 0;
+}
+#date{
+  margin: 3px 0;
+}
+#incomeAmountBar{
+   margin: 3px 0;
+   width: 90px;
+  font-size: 16px;
+  font-weight: bold;
+}
+#allocationInstructions{
+  margin: 3px 0;
+  margin-top: 10px;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+}
+.fund{
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.fundCapitolLabel{
+  margin-left: 25%;
+}
+.fundCapitol{
+  margin: 3px 0;
+  width: 90px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+.to{
+  
+  border: solid white 1px;
+  width: 100%;
+  margin: 0 47%;
+  font-size: 18px;
+}
+.fundSelection{
+  text-align: center;
+  width: 70%;
+  margin-left: 15%;
+  height: 30px;
+  font-size: 17px;
+}
+#addFund{
+  margin-top: 10px;
+  margin-left:25%;
+  margin-right: 15%;
+  font-size: 15px;
+  height: 30px;
+  background-color: cyan; 
+}
+#submit{
+  background-color: #5b8f3c;
+  color: white;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-left: 30%;
+  height: 50px;
+  font-size: 20px;
+  
+}

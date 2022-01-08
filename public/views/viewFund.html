@@ -1,0 +1,33 @@
+{%extends "layout.html" %}
+{% block content %}
+
+<h2>{{fund.fundName}}</h2>
+  <a href="/addSomething"><button id="addSomething" type="button" name="addSomething">Add Income</button></a>
+  <div id="sortController">
+    <p>Sort BY: </p>
+    <select id="sortBar" name="sort">
+      <option value="name">Fund Name</option>
+      <option value="dollars">Cost</option>
+      <option value="date" selected>Date</option>
+    </select>
+    <button id="active" class="sortDirection" name="ascend">&#8593;</button>
+    <button id="inactive" class="sortDirection" name="descend">&#8595</button>
+  </div>
+  <table>
+    <tr>
+      <th>Expense Name</th>
+      <th>Expense Cost</th>
+      <th>Date</th>
+    </tr>
+  {% for expense in expense %}
+    <tr class="row">
+      <td class="name">{{expense.expenseName}}</td>
+      <td class=dollars>${{expense.expenseCost}}</td>
+      <td class="date">{{expense.expenseDate}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <!-- type moduel need for importing functions within the js file -->
+  <script src="../scripts/sort.js" type="module"></script>
+
+{% endblock %}

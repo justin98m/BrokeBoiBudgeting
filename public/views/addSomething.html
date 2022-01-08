@@ -1,0 +1,64 @@
+{%extends "layout.html" %}
+{% block content %}
+
+<div id="formContainer">
+
+
+<div class="divForm" id="fundForm">
+  <form class="form" action="addFund" method="post">
+    <label id="fundNameLabel"for="fundName">Fund Name: </label>
+    <input id="fundNameBar" type="text" name="fundName" required placeholder="Put Name Here...."><br>
+    <label id="capitolLabel"for="capitol">Starting Capitol$: </label>
+    <input id="capitolBar" class="dollar" type="text" name="capitol" value="0" required><br>
+    <input type="submit" name="submitFund" value="Add Fund" class="submit">
+  </form>
+</div>
+
+<div class="divForm" id="incomeForm">
+  <form class="form" action="#" method="post">
+    <label id="incomeLabel"for="income">Income Name: </label>
+    <input id="incomebar"type="text" name="incomeName" value="Add Income Here..." required><br>
+    <label id="incomeAmountLabel"  for="incomeAmount">Income Amount$: </label>
+    <input id="incomeAmountBar" class="dollar" type="text" name="incomeAmount" value="0" required><br>
+    <label for="date">Date of Income: </label>
+    <input id="date" type="date" name="date" >
+    <input class="submit" type="submit" name="submitIncome" value="Submit Income">
+
+    <!-- IDEA: dynamically add funds bars to screen asking
+    to select available fund
+    amount to add to that fund
+
+    also display income remaining
+    percentage of income a fund is taking after a number is put in
+  -->
+  </form>
+</div>
+
+<div class="divForm" id="expenseForm">
+  <form class="form" action="addExpense" method="post">
+    <label id="expenseLabel"for="expenseName">Expense Name: </label>
+    <input id="expenseBar"type="text" name="expenseName" required><br>
+    <label id="costLabel" for="cost">Cost:$</label>
+    <input id="costBar" type="text" class="dollar" name="cost" value ="0" required><br>
+    <label for="date">Date of Expense: </label>
+    <input id="date" type="date" name="date" >
+    <select id="fundSelection" name="fundName" >
+      <option disabled selected value="Select Fund">Select Fund</option>
+      {%for fund in fund%}
+        <option value="{{fund.fundId}}">{{fund.fundName}}</option>
+      {%endfor%}
+      <br>
+    </select>
+    <input class="submit" type="submit"  name="submit" value="Add Expense">
+  </form>
+</div>
+
+</div>
+
+<!-- input is still sanitized server side so messing with this only messes
+  up your personal experience, I dont care to dummy proof server side -->
+<script src="../scripts/inputDummyProof.js"></script>
+
+
+
+{% endblock %}

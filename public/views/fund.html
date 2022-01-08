@@ -1,0 +1,19 @@
+{%extends "layout.html" %}
+{% block content %}
+
+
+<a href="/addSomething"><button id="addSomething" type="button" name="addSomething">Add Fund</button></a>
+<div class="fundContainer">
+{% for fund in fund %}
+  <a href="/viewFund?id={{fund.fundId}}">
+    <button  class="fundButton" type="button" name="{{fund.fundId}}">
+    <span id="fundName">{{fund.fundName}}</span><br>
+    <span id="capitol">${{fund.capitol}}</span>
+  </button>
+  </a>
+{% endfor %}
+</div>
+
+
+
+{% endblock %}

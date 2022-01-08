@@ -1,0 +1,30 @@
+
+#fundSelection{
+  Margin-top:6px;
+  width: 80%;
+  margin-left: 13%;
+  text-align: center;
+
+}
+#expenseBar{
+  width: 63%;
+  margin-bottom: 7px;
+}
+#amountLabel{
+  margin-left: 12%;
+}
+#amountBar{
+  width: 53px;
+}
+#collins{
+  display: none;
+}
+
+#submit{
+  margin-top: 6px;
+  width: 100%;
+}
+.earn{
+  margin-top: 12px;
+  width: 100%;
+}

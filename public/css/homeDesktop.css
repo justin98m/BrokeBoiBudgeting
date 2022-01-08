@@ -1,0 +1,33 @@
+
+#expenseLabel{
+  margin-left: 32%;
+}
+#expenseBar{
+  margin-right: 7px;
+  width: 14%;
+}
+#amountBar{
+  display: inline-block;
+  width: 8%;
+}
+#fundSelection{
+  margin-left: 32%;
+  margin-top: 10px;
+  width: 20%;
+}
+#submit{
+  display: inline-block;
+  width: 40%;
+  height: 40px;
+  margin-left: 32%;
+  margin-top: 8px;
+
+}
+#submit:hover{
+  background-color: #9dff47;
+}
+
+.earn{
+  margin-left: 35%;
+  margin-top: 15px;
+}

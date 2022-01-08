@@ -1,0 +1,10 @@
+
+#addSomething:active{
+ background-color: #9dff47;
+}
+tr:nth-child(even){
+  background-color: white;
+}
+table{
+  border: solid;
+}

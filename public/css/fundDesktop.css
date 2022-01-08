@@ -1,0 +1,25 @@
+div{
+  border: solid white;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.fundButton{
+  width: 270px;
+  border: solid blue;
+  margin-bottom: 40px;
+  margin-left:25px;
+  margin-right: 25px;
+  height: 105px;
+  font-size: 30px;
+}
+#addSomething{
+  margin-bottom: 15px;
+  font-size: 40px;
+  height: 100px;
+  display: inline-block;
+  margin-left: 80%;
+}
+.fundButton:hover{
+ background-color: #9dff47;
+}
+

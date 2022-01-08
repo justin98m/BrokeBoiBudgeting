@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2 id="title">Welcome Budgetter!!</h2>
+<h3> Available Funds : $${{avialableFunds}}</h3>
+
+<form  action="/addExpense" method="post">
+    <label id="expenseLabel"for="expenseName">Expense Name: </label>
+    <input id="expenseBar"type="text" name="expenseName" required>
+    <label id="amountLabel"for="cost">Amount:$</label>
+    <input id="amountBar" type="text" name="cost" required>
+    <select id="fundSelection" name="fundName" >
+      <option disabled selected value="Select Fund">Select Fund</option>
+      {%for fund in fund%}
+        <option value="{{fund.fundId}}">{{fund.fundName}}</option>
+      {%endfor%}
+    </select>
+    <input type="submit" id="submit" name="submit" value="Add Expense">
+</form>
+
+  <picture >
+    <source class="earn" media="(max-width: 699px)"srcset="./src/brokeEarn400w.jpg">
+    <source  class="earn" media="(min-width: 700 px)" srcset="./src/brokeEarn600w.jpg" >
+    <img class="earn" src=./src/brokeEarn600w.jpg alt="Earn about to order a kids meal because that's all he can afford">
+  </picture>
+
+
+{% endblock %}
