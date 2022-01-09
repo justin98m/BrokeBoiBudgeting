@@ -16,9 +16,7 @@ app.use(express.static(__dirname + '/public'))
 const port = 8080
 const date = require('./scripts/convertDate.js')
 const value = require('./scripts/validate.js')
-//Prebuilt SQL Functions
-const con = require('./scripts/connect.js')
-const start= require('./scripts/runsql.js')
+const start = require('./scripts/connect.js')
 const consolidate = require('./scripts/consolidateFundIds')
 const request = require('./scripts/getFunds.js')
 //turn req.body form data into readable and extractable information
@@ -41,14 +39,13 @@ app.get('/errorPage',(req,res) =>{
 	})
 })
 
-
 app.get('/',(req,res) => {
 
 		let query = "select fundName, fundId from FUND "
 
-		start.runsql(query,(result,flag)=>{
-			if(flag){
-				console.error("error: ", result)
+		start.runsql.query(query,(err,result)=>{
+			if(err){
+				console.error("error: ", err)
 				res.redirect('/errorPage')
 			}
 			else
@@ -68,9 +65,9 @@ app.get('/',(req,res) => {
 
 app.get('/expense',(req,res) =>{
 	let query = "select * from EXPENSE"
-	start.runsql(query,(result,flag)=>{
-		if(flag){
-			console.log("error",result)
+	start.runsql.query(query,(err,result)=>{
+		if(err){
+			console.log("error",err)
 			res.redirect('/errorPage')
 			}
 		else {
@@ -81,9 +78,9 @@ app.get('/expense',(req,res) =>{
 			for (var i = 1; i < fundIds.length; i++) {
 				query += " or fundid=" + fundIds[i]
 			}
-			start.runsql(query,(result,flag)=>{
-				if(flag){
-					console.error("error",result);
+			start.runsql.query(query,(err,result)=>{
+				if(err){
+					console.error("error",err);
 					res.redirect('/errorPage')
 				}
 				else {
@@ -116,8 +113,8 @@ app.get('/income',(req,res) => {
 app.get('/fund',(req,res) => {
 	//get all fund data and send data to be associated with HTML elements
 	let query = "select * from FUND"
-	start.runsql(query,(result,flag)=>{
-		if(flag){
+	start.runsql.query(query,(err,result)=>{
+		if(err){
 			console.error("error: ", result)
 			res.redirect('/errorPage')
 		}
@@ -141,8 +138,8 @@ app.get('/viewFund',(req,res)=>{
 	let query = "select expenseName, expenseCost, expenseDate"
 	query += " from EXPENSE where fundId = " + fundId
 
-			start.runsql(query,(expenseResult,flag)=>{
-				if(flag){
+			start.runsql.query(query,(err,expenseResult)=>{
+				if(err){
 					console.error("error: ", expenseResult)
 					res.redirect('/errorPage')
 				}
@@ -151,8 +148,8 @@ app.get('/viewFund',(req,res)=>{
 					//ask server for fund information again to avoid passing info through get request
 					query = "select fundName, capitol from FUND where fundId =" + fundId
 
-					start.runsql(query,(fundResult,flag)=>{
-						if(flag)
+					start.runsql.query(query,(err,fundResult)=>{
+						if(err)
 							console.error("error: ", fundResult)
 						else{
 							console.log("fund query: ",fundResult)
@@ -209,8 +206,8 @@ app.get('/addSomething',(req,res) =>{
 //requesting Funds
 //render must be put in callback or the page will load before sql returns the data
 let query = "select fundName, fundId from FUND "
-start.runsql(query,(result,flag)=>{
-	if(flag){
+start.runsql.query(query,(err,result)=>{
+	if(err){
 		console.error("error: ", result)
 		res.redirect('/errorPage')
 	}
@@ -244,8 +241,8 @@ app.post('/addFund',(req,res)=>{
 	let query = "insert into FUND (fundName,capitol,creationDate) values"+
 	"('"+input.fundName+"',"+input.capitol+",'"+input.date+"') "
 
-		start.runsql(query,(result,flag)=>{
-			if(flag){
+		start.runsql.query(query,(err,result)=>{
+			if(err){
 				console.error("error: ", result)
 				res.redirect('/errorPage')
 			}
@@ -279,8 +276,8 @@ app.post('/addExpense',(req,res)=>{
 	query += ","+input.fundId+")"
 	//console.log(query)
 
-	start.runsql(query,(result,flag)=>{
-		if(flag){
+	start.runsql.query(query,(err,result)=>{
+		if(err){
 			console.error("\n\n\nerror: ", result,'\n\n\n')
 			res.redirect('/errorPage')
 		}

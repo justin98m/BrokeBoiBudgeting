@@ -7,7 +7,12 @@ var con = mysql.createConnection({
         host: process.env.REMOTEMYSQLHOST,
         user: process.env.REMOTEMYSQLUSER,
         password: process.env.REMOTEMYSQLPASS,
-        database: "2budget"
+        database: process.env.DATABASE
 });
 
-exports.con = con;
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
+exports.runsql = con;
