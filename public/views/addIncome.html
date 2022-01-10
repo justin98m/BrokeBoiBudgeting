@@ -2,13 +2,13 @@
 {% block content %}
 
 
-
+<p id="errorMessage"></p>
 <div id="incomeForm">
   <div id="availableCapitolContainer">
     <p id="availableCapitolTitle">Capitol Left to Distribute: </p>
     <p id="availableCapitol">$0</p>
   </div>
-  <form id="form" action="#" method="post">
+  <form id="form" action="/" method="post">
     <label class="label" id="incomeLabel"for="income">Income Name: </label>
     <input id="incomeBar"type="text" name="incomeName" value="Add Income Here..." required><br>
     <label id="dateLabel" class="label" for="date">Date of Income: </label>
@@ -20,9 +20,9 @@
     <div id="fundsContainer">
       <div class="fund">
         <label  class="fundCapitolLabel" for="fund[x][fundCapitol]"> Add: $</label>
-        <input required type="number" name="fund[0][fundCapitol]" class="fundCapitol" min="0">
+        <input required type="number" name="fund[0][fundCapitol]" class="fundCapitol" min="0" value="0">
         <span class="to" >To</span>
-        <select class="fundSelection" name="fund[0][fundName]" >
+        <select class="fundSelection" name="fund[0][fundName]" required >
           <option disabled selected value="Select Fund">Select Fund</option>
           {%for fund in fund%}
             <option value="{{fund.fundId}}">{{fund.fundName}}</option>
@@ -32,18 +32,17 @@
       </div>
       <button type="button" id="addFund" name="addFund">+ ADD TO ANOTHER FUND +</button>
     </div>
-    <input id="submit" type="submit" name="submitIncome" value="Submit Income">
+    <button id="btnSubmit" type="button" name="btnSubmit" >Submit Income</button>
   </form>
   </div>
 
 
 
-<script src="../scripts/prefill.js">
-
-</script>
+<script src="../scripts/prefill.js"></script>
 <!-- input is still sanitized server side so messing with this only messes
   up your personal experience, I dont care to dummy proof server side -->
 <script src="../scripts/inputDummyProof.js"></script>
+<script src="../scripts/incomeDummyProof.js"></script>
 
 
 
