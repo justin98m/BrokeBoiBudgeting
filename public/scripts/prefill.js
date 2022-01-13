@@ -24,11 +24,8 @@ function addFundListener(thisFund){
 addButton.addEventListener('click',()=>{
   addFund(fund)
 })
-//should take current val of income- all the funds income combined
-//should turn red when Negative
-//black when 0
-function updateAvailableCapitol(){
-  var i, sum=0
+function getAvailableCapitol(){
+  var i, sum=0,tempIncome,difference
   for (var i = 0; i < fund.length; i++) {
     sum += parseInt(fund[i].children[1].value)
     //console.log('fund:', i , ' capitol: ',fund[i].children[1].value)
@@ -36,6 +33,14 @@ function updateAvailableCapitol(){
   //console.log('FUnd Capitol: ', sum);
   tempIncome = parseInt(incomeAmount.value)
   difference = tempIncome-sum
+  return difference
+}
+//should take current val of income- all the funds income combined
+//should turn red when Negative
+//black when 0
+function updateAvailableCapitol(){
+
+  var difference = getAvailableCapitol()
   availableCapitol.innerHTML = '$'+ difference
   if(difference == 0)
     availableCapitol.style.color = 'black'
@@ -96,3 +101,4 @@ function addFund(fund){
   fund = document.getElementsByClassName('fund')
 
 }
+export {getAvailableCapitol}
