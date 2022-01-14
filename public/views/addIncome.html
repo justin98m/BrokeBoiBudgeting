@@ -12,7 +12,7 @@
     <label class="label" id="incomeLabel"for="income">Income Name: </label>
     <input id="incomeBar"type="text" name="incomeName" value="Add Income Here..." required><br>
     <label id="dateLabel" class="label" for="date">Date of Income: </label>
-    <input id="date" type="date" name="date" >
+    <input id="date" type="date" name="date" required>
     <br>
     <label id="incomeAmountLabel"  for="incomeAmount">Income Amount : $</label>
     <input id="incomeAmountBar" min="0" class="dollar" type="number" name="incomeAmount" value="0" required><br>
@@ -23,7 +23,7 @@
         <input required type="number" name="fund[0][fundCapitol]" class="fundCapitol" min="0" value="0">
         <span class="to" >To</span>
         <select class="fundSelection" name="fund[0][fundName]" required >
-          <option disabled selected value="Select Fund">Select Fund</option>
+          <option disabled selected value="Select Fund">Select fund</option>
           {%for fund in fund%}
             <option value="{{fund.fundId}}">{{fund.fundName}}</option>
           {%endfor%}
@@ -36,17 +36,14 @@
   </form>
   </div>
 
-
-<script src="../scripts/prefill.js"></script>
+<script type="module" src="../scripts/inputDummyProof.js"></script>
+<script type="module" src="../scripts/prefill.js"></script>
 <script type="module" src="../scripts/invalidIncomeDifferenceReason.js"></script>
 <script type="module" src="../scripts/incomeDummyProof.js"></script>
 <script type="module" src="../scripts/addIncome.js"></script>
 
 <!-- input is still sanitized server side so messing with this only messes
   up your personal experience, I dont care to dummy proof server side -->
-<script src="../scripts/inputDummyProof.js"></script>
-
-
 
 
 {% endblock %}

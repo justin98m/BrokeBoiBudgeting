@@ -1,3 +1,4 @@
+import {validNumber} from "./inputDummyProof.js"
 var incomeAmount,fund,submit,availableCapitol,deleteButton
 var addButton,deletefund,fundsContainer
 
@@ -17,8 +18,17 @@ updateAvailableCapitol()
 function addDeleteListener(thisDeleteButton){
   thisDeleteButton.addEventListener('click',()=>{deleteFund(thisDeleteButton)})
 }
+//These Change listeners update Available capitol left to distribut value
+//along with correcting invalid values to valid ones
+incomeAmount.addEventListener("change",() =>{
+  incomeAmount.value = validNumber(incomeAmount.value)
+  updateAvailableCapitol()
+})
 function addFundListener(thisFund){
-  thisFund.addEventListener('change',()=>{updateAvailableCapitol()})
+  thisFund.addEventListener('change',()=>{
+    thisFund.children[1].value = validNumber(thisFund.children[1].value)
+    updateAvailableCapitol()
+    })
 }
 
 addButton.addEventListener('click',()=>{
@@ -52,8 +62,6 @@ function updateAvailableCapitol(){
 }
 
 function deleteFund(deleteButton){
-  console.log('delete Fund');
-  console.log('Parent Fund: ',deleteButton.parentNode);
   deleteButton.parentNode.remove()
   //updates the fund variable to remove the deleted fund container
   fund = document.getElementsByClassName('fund')
@@ -70,9 +78,6 @@ function updateNameValues(fund){
   }
 
 }
-incomeAmount.addEventListener("change",() =>{
-  updateAvailableCapitol()
-})
 //adds a fund to the bottom of the fund container
 function addFund(fund){
   console.log('Add Fund Running');
@@ -99,6 +104,5 @@ function addFund(fund){
   addFundListener(temp)
   //updates the fund variable to contain this newly created fund container
   fund = document.getElementsByClassName('fund')
-
 }
 export {getAvailableCapitol}

@@ -1,18 +1,32 @@
-//What Im trying to do {
-  //disable the submit button if the difference is 0
-  //which means everytime any number val is changed we are checking what the diff is
-  //when the difference is valid remove the message and enable the submit button
-  //also want to put specific test for a generic dummy proof for all forms
-    //where the a file specific dummy proofer can can send a dollar value to the generic
-    //generic would then validate/invalidate the number
-} while (true);
+//Having Issues with HTML NOt requiring any input values but the dateLabel
+//and I dont know why
+
+//Verfies that Capitol Left to Distribute = 0
+//Alters the submit button to be disbabled if not
 import {invalidDifferenceReason} from "./invalidIncomeDifferenceReason.js"
+import {getAvailableCapitol} from "./prefill.js"
+
 
 var submit = document.getElementById('submit');
-submit.disabled = true;
-
 submit.addEventListener('mouseover',(event)=>{
-  invalidDifferenceReason()
-})
+    //invalidDifferenceReason(getAvailableCapitol)
+    submitSwitch()
+  })
+function submitSwitch(){
+  //when a value changes recalculate the difference
+  //if diff is not 0 disable the submitt
+  //else enable it
+  var difference = getAvailableCapitol()
+  console.log("diff: ",difference);
+  if(difference != 0){
+    submit.disabled = true;
+    invalidDifferenceReason(difference)
+  }
+  else {
+    console.log("valid difference");
+    document.getElementById("errorMessage").innerHTML = ""
+    submit.disabled = false
+  }
+}
 
 console.log("running");
