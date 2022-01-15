@@ -8,7 +8,7 @@
     <p id="availableCapitolTitle">Capitol Left to Distribute: </p>
     <p id="availableCapitol">$0</p>
   </div>
-  <form id="form" action="/" method="post">
+  <form id="form" action="/addIncome" method="post">
     <label class="label" id="incomeLabel"for="income">Income Name: </label>
     <input id="incomeBar"type="text" name="incomeName" value="Add Income Here..." required><br>
     <label id="dateLabel" class="label" for="date">Date of Income: </label>
@@ -19,10 +19,10 @@
     <p id="allocationInstructions">Allocate Income Dollars to Your Funds Below</p>
     <div id="fundsContainer">
       <div class="fund">
-        <label  class="fundCapitolLabel" for="fund[x][fundCapitol]"> Add: $</label>
-        <input required type="number" name="fund[0][fundCapitol]" class="fundCapitol" min="0" value="0">
+        <label  class="fundCapitolLabel" for="fund[x][capitol]"> Add: $</label>
+        <input required type="number" name="fund[0][capitol]" class="fundCapitol" min="0" value="0">
         <span class="to" >To</span>
-        <select class="fundSelection" name="fund[0][fundName]" required >
+        <select class="fundSelection" name="fund[0][id]" required >
           <option disabled selected value="Select Fund">Select fund</option>
           {%for fund in fund%}
             <option value="{{fund.fundId}}">{{fund.fundName}}</option>

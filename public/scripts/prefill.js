@@ -73,8 +73,8 @@ function updateNameValues(fund){
   for (var i = 1; i < fund.length; i++) {
     capitolBar = fund[i].children[1]
     selectBar = fund[i].children[3]
-    capitolBar.name = "fund["+i+"][fundCapitol]"
-    selectBar.name = "fund["+i+"][fundName]"
+    capitolBar.name = "fund["+i+"][capitol]"
+    selectBar.name = "fund["+i+"][id]"
   }
 
 }
@@ -95,9 +95,9 @@ function addFund(fund){
   //updaateNameValues isnt called since iterations all values dont need to be updated
   capitolBar = temp.children[1]
   selectBar = temp.children[3]
-  capitolBar.name = "fund["+pos+"][fundCapitol]"
+  capitolBar.name = "fund["+pos+"][capitol]"
   capitolBar.value = 0
-  selectBar.name = "fund["+pos+"][fundName]"
+  selectBar.name = "fund["+pos+"][id]"
 
   //creates listeners for these individual nodes
   addDeleteListener(tempDelete)
