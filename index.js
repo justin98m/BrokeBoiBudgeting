@@ -297,7 +297,6 @@ app.post('/addIncome',(req,res)=>{
 		capitol : req.body.incomeAmount
 	}
 	fund = req.body.fund
-	//income =
 	upload.income(income,fund)
 	res.redirect('/')
 })
