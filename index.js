@@ -19,6 +19,7 @@ const value = require('./scripts/validate.js')
 const start = require('./scripts/connect.js')
 const consolidate = require('./scripts/consolidateFundIds')
 const request = require('./scripts/getFunds.js')
+const upload = require('./scripts/uploadData.js')
 //turn req.body form data into readable and extractable information
 //tell nunjucks where to find njk/html files
 nunjucks.configure('./public/views', {
@@ -288,6 +289,17 @@ app.post('/addExpense',(req,res)=>{
 		}
 
 	})
+})
+app.post('/addIncome',(req,res)=>{
+	income ={
+		name: req.body.incomeName,
+		date: date.convert(req.body.date),
+		capitol : req.body.incomeAmount
+	}
+	fund = req.body.fund
+	//income =
+	upload.income(income,fund)
+	res.redirect('/')
 })
 
 
