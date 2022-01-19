@@ -2,6 +2,7 @@
   This script will upload data to sql table based on the called function's
   expected input
 */
+const sqlString = require('sqlstring')
 const start = require('./connect.js')
 //Add income to db , retirieves this income's ID and sends it to fundIncome to
 //to upload to its table
@@ -39,7 +40,8 @@ function fundIncome(fundIncome,incomeId){
       }
     })
 
-
+function expense(){}
+function fund(){}
 
 }
 module.exports = {income,fundIncome}

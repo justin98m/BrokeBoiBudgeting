@@ -1,4 +1,4 @@
-var FundIds = function(expenses){
+var fundIds = function(expenses){
 
 //The first fundid is set manually because
 //it ensures nested loop runs and is gurenteed to be a unique ID
@@ -12,11 +12,11 @@ for (var i = 0; i < expenses.length; i++) {
         break
       }
       else if(n == fundIds.length -1) {
-          //console.log("adding ",expenses[i].fundId ,"To list : ", fundIds);
+          //same as pushing the unique id into the array
           fundIds[fundIds.length] = expenses[i].fundId
       }
     }
   }
   return fundIds
 }
-exports.FundIds = FundIds
+exports.fundIds = fundIds
