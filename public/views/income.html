@@ -5,8 +5,8 @@
 <div id="sortController">
   <p>Sort BY: </p>
   <select id="sortBar" name="sort">
-    <option value="name">Fund Name</option>
-    <option value="dollars">Cost</option>
+    <option value="name">Income Name</option>
+    <option value="dollars">Income Capitol</option>
     <option value="date" selected>Date</option>
   </select>
   <button id="active" class="sortDirection" name="ascend">&#8593;</button>
@@ -14,15 +14,21 @@
 </div>
 <table>
   <tr>
-    <th>Expense Name</th>
-    <th>Expense Cost</th>
+    <th>Income Name</th>
+    <th>Income Capitol</th>
     <th>Date</th>
+    <th></th>
   </tr>
 {% for income in income %}
   <tr class="row">
     <td class="name">{{income.incomeName}}</td>
-    <td class=dollars>${{income.incomeCost}}</td>
+    <td class=dollars>${{income.capitol}}</td>
     <td class="date">{{income.incomeDate}}</td>
+    <td class="viewIncome">
+      <a href="/viewIncome?id={{income.incomeId}}"><button>
+        View Income
+      </button></a>
+    </td>
   </tr>
   {% endfor %}
 </table>
