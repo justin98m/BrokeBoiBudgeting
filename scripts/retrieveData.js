@@ -15,6 +15,17 @@ function income(callback){
     }
   })
 }
+function thisIncome(incomeId,callback){
+  let sql ="select * from FUND_INCOME where incomeId ="+ incomeId
+  start.runsql.query(sql,(err,income)=>{
+    if(err){callback(false)}
+    else{
+      console.log(income);
+      fundIds = consolidate.fundIds(income)
+      fundNames(fundIds,income,callback)
+    }
+  })
+}
 function thisFund(fundId,callback){
   let sql = "select expenseName, expenseCost, expenseDate"
   sql+= " from EXPENSE where fundId= " + fundId + ";"
@@ -50,7 +61,9 @@ function funds(callback){
     }
   })
 }
-function fundNames(fundId,expense,callback){
+//category can represent income or expense as
+//a income or expense function may call fundNAmes
+function fundNames(fundId,category,callback){
   let sql = "select fundName,fundId from FUND where fundId="+fundId[0]
   for (var i = 1; i < fundId.length; i++) {
     sql += " or fundid="+fundId[i]
@@ -62,7 +75,7 @@ function fundNames(fundId,expense,callback){
       callback(false)
     }
     else{
-      callback({fundKey: fundKey,expense :expense})
+      callback({fundKey: fundKey,category :category})
     }
   })
 }
@@ -87,5 +100,6 @@ module.exports = {
   funds,
   fundSelectBar,
   thisFund,
-  income
+  income,
+  thisIncome
 }

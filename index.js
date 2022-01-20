@@ -33,6 +33,9 @@ app.get('/errorPage',(req,res) =>{
 })
 
 app.get('/',(req,res) => {
+	if(req.query.success == 'true')
+		var expenseAdded = true
+	else{var expenseAdded = false}
 	retrieve.fundSelectBar((funds)=>{
 		if(!funds){
 			res.redirect('/errorPage')
@@ -42,14 +45,13 @@ app.get('/',(req,res) => {
 				layout:'layout.html',
 				cssDesktop: 'homeDesktop.css',
 				cssMobile: 'homeMobile.css',
-				fund : funds
+				fund : funds,
+				message : expenseAdded
 			})
 		}
 	})
 })
 app.get('/expense',(req,res) =>{
-	//function will look up expenses and find fund names Associated
-	//when db query is finish the page render is called as the callback function
 	retrieve.expenses((expenses)=>{
 		if(!expenses){
 			res.redirect('/errorPage')
@@ -60,14 +62,13 @@ app.get('/expense',(req,res) =>{
 				cssDesktop: 'expenseDesktop.css',
 				cssMobile: 'expenseMobile.css',
 				fund: expenses.fundKey,
-				expense: expenses.expense,
+				expense: expenses.category,
 				title: 'Here Are Your Expenses',
 			})
 		}
 	})
 })
 app.get('/income',(req,res) => {
-
 	retrieve.income((income)=>{
 		res.render('income.html',data ={
 			layout: 'layout.html',
@@ -78,9 +79,30 @@ app.get('/income',(req,res) => {
 		})
 	})
 })
+app.get('/viewIncome',(req,res) =>{
+	let incomeId = req.query.id
+	retrieve.thisIncome(incomeId,(income)=>{
+		if(!income){res.redirect('/errorPage')}
+		else{
+			console.log(income);
+			res.render('viewIncome.html',data={
+				layout:'layout.html',
+				cssDesktop: 'viewIncomeDesktop.css',
+				cssMobile: 'viewIncomeMobile.css',
+				title : "This Income Statement",
+				income : income.category,
+				fund : income.fundKey
+			})
+		}
+	})
+})
 
 app.get('/fund',(req,res) => {
+	if(req.query.success == "true")
+		var fundAdded = true
+	else {var fundAdded = false}
 	retrieve.funds((funds)=>{
+		console.log(fundAdded);
 		if(!funds){
 			res.redirect('/errorPage')
 		}
@@ -90,7 +112,8 @@ app.get('/fund',(req,res) => {
 				cssDesktop: 'fundDesktop.css',
 				cssMobile:'fundMobile.css',
 				title: 'Funds',
-				fund: funds
+				fund: funds,
+				message : fundAdded
 			})
 		}
 	})
@@ -184,17 +207,10 @@ app.post('/addFund',(req,res)=>{
 			capitol: req.body.capitol,
 			date: today
 	}
-	let query = "insert into FUND (fundName,capitol,creationDate) values"+
-	"('"+input.fundName+"',"+input.capitol+",'"+input.date+"') "
-
-		start.runsql.query(query,(err,result)=>{
-			if(err){
-				console.error("error: ", err)
-				res.redirect('/errorPage')
-			}
-			else
-				res.redirect('/addSomething')
-			})
+	upload.fund(input,(success)=>{
+		if(!success){res.redirect('/errorPage')}
+		res.redirect('/fund?success=true')
+	})
 
 })
 
@@ -203,7 +219,7 @@ app.post('/addExpense',(req,res)=>{
 		expenseName: req.body.expenseName,
 		expenseCost: req.body.cost,
 		date : date.convert(req.body.date),
-		//the fundname is tranlated to an Id so the server can find the name elsewhere
+		//the name is the ID as the server can ask the db for the name of a fundId
 		fundId : req.body.fundName
 	}
 	console.log("Date: ",input.date);
@@ -217,21 +233,10 @@ app.post('/addExpense',(req,res)=>{
 		res.redirect('/addSomething?badValue=name')
 		return false
 	}
-	let query = "insert into EXPENSE (expenseName,expenseCost,expenseDate,fundId)"
-	query += " VALUES('"+input.expenseName+"',"+input.expenseCost+",'"+input.date+"'"
-	query += ","+input.fundId+")"
-	//console.log(query)
 
-	start.runsql.query(query,(err,result)=>{
-		if(err){
-			console.error("\n\n\nerror: ", result,'\n\n\n')
-			res.redirect('/errorPage')
-		}
-		else{
-			console.log("\n\n\nNOT AN ERROR\n\n\n");
-			console.log(result)
-			res.redirect('/addSomething')
-		}
+	upload.expense(input,(success)=>{
+		if(!success){res.redirect('/errorPage')}
+		else{res.redirect('/?success=true')}
 
 	})
 })
@@ -242,8 +247,12 @@ app.post('/addIncome',(req,res)=>{
 		capitol : req.body.incomeAmount
 	}
 	fund = req.body.fund
-	upload.income(income,fund)
-	res.redirect('/')
+	upload.income(income,fund,(success)=>{
+		if(!success){res.redirect('/errorPage')}
+		else {
+			res.redirect('/viewIncome?id='+success.incomeId)
+		}
+	})
 })
 
 
