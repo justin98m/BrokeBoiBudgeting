@@ -4,16 +4,16 @@ import displaySort from './displaySort.js'
 
 var htmlTable = document.getElementsByClassName('row')
 let sortBar = document.getElementById('sortBar')
-sortBar.value = "date"
+
 //default for both buttons, changing of id  after load wont change the actual node
 let ascend = document.getElementById('active')
 let descend = document.getElementById('inactive')
 let rowData = storeRowData()
-const defaultSort = {column : sortBar.value,  direction : ascend.name }
+const defaultSort = {column : "date",  direction : "ascend" }
 let sortBy = defaultSort
 
 callBubblsort(defaultSort)
-
+//change the select bar update the table
 sortBar.addEventListener('change',(event) => {
   sortBy = {
     column : sortBar.value,
@@ -22,6 +22,7 @@ sortBar.addEventListener('change',(event) => {
   console.log("Cureent Direction ", sortBy.direction);
   callBubblsort(sortBy)
 })
+//change the direction to Descending update the table
 descend.addEventListener('click',(event)=>{
   //dont sort if already in desired direction
   if(descend.id != 'active'){
@@ -32,7 +33,7 @@ descend.addEventListener('click',(event)=>{
     callBubblsort(sortBy)
   }
 })
-
+//change direction to Ascending update the table
 ascend.addEventListener('click',(event)=>{
   //dont sort if already in desired direction
   if(ascend.id != "active"){
