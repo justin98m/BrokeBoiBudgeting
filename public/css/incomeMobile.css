@@ -1,20 +1,10 @@
-.links{
-  text-align: center;
-  padding-top: 20px;
-  border: solid white;
-  margin-top: 5%
-}
 
-.links button{
-  width: 40%;
-  border: solid blue;
-  margin-left:15px;
-  margin-right: 15px;
-  height: 125px;
-  margin-bottom: 30px;
-  margin-top: 40px;
-  font-size: 30px;
-}
-.links button:active{
+#addSomething:active{
  background-color: #9dff47;
+}
+tr:nth-child(even){
+  background-color: white;
+}
+table{
+  border: solid;
 }

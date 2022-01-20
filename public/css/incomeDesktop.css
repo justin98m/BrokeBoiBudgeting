@@ -1,19 +1,5 @@
-.links{
-  text-align: center;
-  padding-top: 20px;
-  border: solid white;
-  margin-top: 5%
-}
-.links button{
-  width: 310px;
-  border: solid blue;
-  margin-left:40px;
-  margin-right: 60px;
-  height: 65px;
-  font-size: 36px;
 
-}
-button:hover{
+#addSomething:hover{
  background-color: #9dff47;
 }
 #addSomething{
@@ -21,4 +7,18 @@ button:hover{
   height: 100px;
   display: inline-block;
   margin-left: 80%;
+}
+tr:nth-child(even){
+  background-color: white;
+}
+tr{
+  font-size: 22px;
+  text-align: center;
+}
+table{
+  border: solid;
+  margin-left: 15%;
+  width: 70%;
+
+
 }
