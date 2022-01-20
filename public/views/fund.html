@@ -4,6 +4,11 @@
 
 <a href="/addSomething"><button id="addSomething" type="button" name="addSomething">Add Fund</button></a>
 <div class="fundContainer">
+  <p>
+    {% if message == true %}
+      Fund Added successfully
+    {%endif%}
+  </p>
 {% for fund in fund %}
   <a href="/viewFund?id={{fund.fundId}}">
     <button  class="fundButton" type="button" name="{{fund.fundId}}">
