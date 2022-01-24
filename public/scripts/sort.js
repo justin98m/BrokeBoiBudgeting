@@ -4,7 +4,6 @@ import displaySort from './displaySort.js'
 
 var htmlTable = document.getElementsByClassName('row')
 let sortBar = document.getElementById('sortBar')
-
 //default for both buttons, changing of id  after load wont change the actual node
 let ascend = document.getElementById('active')
 let descend = document.getElementById('inactive')
@@ -46,8 +45,8 @@ ascend.addEventListener('click',(event)=>{
 })
 
 function callBubblsort(sortBy){
-  bubblesort(rowData,sortBy.column, ()=>{
-      displaySort(rowData,htmlTable,sortBy.direction)
+  bubblesort(rowData,sortBy.column, (sortedData)=>{
+      displaySort(sortedData,htmlTable,sortBy.direction)
     })
 }
 
@@ -55,14 +54,21 @@ function callBubblsort(sortBy){
 //put html table information in to an array of objects containing all column info
 function storeRowData(){
   var rowData = new Array()
+  var type,tableRow
   for (var i = 0; i <htmlTable.length; i++) {
-
+    //a copy is made so when values of htmlTable are written over the
+    //row Data values wont change, specifically classList
+    tableRow = htmlTable[i].cloneNode(true)
     rowData[i] = {
-      date: toDateObject(htmlTable[i].querySelector(".date").innerHTML),
-      id: htmlTable[i].id,
+      date: toDateObject(tableRow.querySelector(".date").innerHTML),
+      id: tableRow.id,
+      //this helps determine how to display the value
+      //if classList[1] doesnt exist nothing happens
+      //type: htmlTable[i].querySelector(".dollars").classList[1],
+      classList: tableRow.querySelector(".dollars").classList,
       //get dollar string, remove dollar sign and turn into a number
-      dollars: parseInt(htmlTable[i].querySelector(".dollars").innerHTML.slice(1)),
-      name: htmlTable[i].querySelector(".name").innerHTML
+      dollars: parseInt(tableRow.querySelector(".dollars").innerHTML.slice(1)),
+      name: tableRow.querySelector(".name").innerHTML
     }
   }
   return rowData
