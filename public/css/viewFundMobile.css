@@ -8,3 +8,13 @@ tr:nth-child(even){
 table{
   border: solid;
 }
+.dollars{
+  font-weight: bold;
+}
+.expense{
+  color: red;
+}
+
+.transfer{
+  color: #5b8f3c;
+}

@@ -19,6 +19,13 @@ table{
   border: solid;
   margin-left: 15%;
   width: 70%;
-  
-  
+}
+.dollars{
+  font-weight: bold;
+}
+.expense{
+  color: red;
+}
+.transfer{
+  color: #5b8f3c;
 }

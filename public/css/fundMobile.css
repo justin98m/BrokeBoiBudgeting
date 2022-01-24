@@ -1,4 +1,45 @@
-div{
+h1{
+  margin-bottom: 10px; 
+}
+#fundForm{
+  border:solid;
+  width: 90%;
+  margin : 1% 5%;
+  height: 90px;
+}
+#fundForm p{
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 5px 0 ;
+}
+#fundNameBar{
+  margin-bottom: 3px;
+  height: 15px;
+  font-size: 13px;
+  width: 30%;
+}
+#fundNameLabel{
+  margin-left:5px;
+  font-size: 14px;
+}
+#capitolBar{
+  width: 50px;
+  height: 24px;
+  text-align: center;
+  font-size: 18px;
+}
+#capitolLabel{
+  font-size: 14px;
+  margin-left: 5px;
+}
+#submit{
+  font-size:17px;
+  width: 100px;
+  height:50px;
+  float: right;
+}
+.fundContainer{
   border: solid white;
   margin-left: 1px;
   margin-right: 1px;
