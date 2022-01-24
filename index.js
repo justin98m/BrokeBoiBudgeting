@@ -159,40 +159,12 @@ app.get('/addIncome',(req,res)=>{
 		else{res.redirect('/errorPage')}
 	})
 })
-
-app.get('/addSomething',(req,res) =>{
-	let error = req.query.badValue
-	let message = false
-	switch (error) {
-		case 'dollar':
-			message = "I repeat, YOU CANT ENTER THAT AS A DOLLAR AMOUNT"
-			break;
-		case 'name':
-			message = "Thats not a valid Name"
-			break;
-	}
-
-//requesting Funds
-//render must be put in callback or the page will load before sql returns the data
-let query = "select fundName, fundId from FUND "
-start.runsql.query(query,(err,result)=>{
-	if(err){
-		console.error("error: ", result)
-		res.redirect('/errorPage')
-	}
-	else{
-		//console.log(result)
-
-			res.render('addSomething.html',data = {
-			layout: 'layout.html',
-			cssDesktop: 'addSomethingDesktop.css',
-			cssMobile: 'addSomethingMobile.css',
-			fund: result,
-
-			})
-			if(message){ alert(message)}
-
-		}
+app.get('/addFund',(req,res)=>{
+	res.render('addFund.html',data = {
+		layout: 'layout.html',
+		cssDesktop: 'addFundDesktop.css',
+		cssMobile: 'addFundMobile.css',
+		title: 'Add A Fund Here'
 	})
 })
 
