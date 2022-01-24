@@ -23,7 +23,6 @@ var bubblesort = function(rowData,field,displaySort){
         }
       }
   }
-  console.log(rowData)
-  displaySort()
+    displaySort(rowData)
 }
 export default bubblesort
