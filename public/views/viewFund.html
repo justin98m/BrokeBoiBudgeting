@@ -2,11 +2,11 @@
 {% block content %}
 
 <h2>{{fund.fundName}}</h2>
-  <a href="/addSomething"><button id="addSomething" type="button" name="addSomething">Add Income</button></a>
+  <a href="/"><button id="addExpense" type="button" name="addExpense">Add expense</button></a>
   <div id="sortController">
     <p>Sort BY: </p>
     <select id="sortBar" name="sort">
-      <option value="name">Fund Name</option>
+      <option value="name">Expense Name</option>
       <option value="dollars">Cost</option>
       <option value="date" selected>Date</option>
     </select>
@@ -19,14 +19,29 @@
       <th>Expense Cost</th>
       <th>Date</th>
     </tr>
+  <!-- Onces tables are added
+    for Transfer in Transfers will be added
+    for Income in income will be added
+    This will all be sorted before users sees by client js
+    So no need to sort in server and put in one list
+    !-->
+
+    <tr class="row">
+      <td class="name">Transfer Test</td>
+      <td class="dollars transfer" >$12</td>
+      <td class="date">12232023</td>
+    </tr>
   {% for expense in expense %}
     <tr class="row">
       <td class="name">{{expense.expenseName}}</td>
-      <td class=dollars>${{expense.expenseCost}}</td>
+      <td class="dollars expense">${{expense.expenseCost}}</td>
       <td class="date">{{expense.expenseDate}}</td>
     </tr>
     {% endfor %}
   </table>
+
+
+
   <!-- type moduel need for importing functions within the js file -->
   <script src="../scripts/sort.js" type="module"></script>
 

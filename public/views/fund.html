@@ -1,8 +1,17 @@
 {%extends "layout.html" %}
 {% block content %}
 
+<div id="fundForm">
+  <p>Add a fund here</p>
+  <form class="form" action="addFund" method="post">
+    <input type="submit" id="submit" name="submitFund" value="Add Fund" >
+    <label id="fundNameLabel"for="fundName">Fund Name: </label>
+    <input id="fundNameBar" type="text" name="fundName" required placeholder="Put Name Here...."><br>
+    <label id="capitolLabel"for="capitol">Starting Capitol$: </label>
+    <input id="capitolBar" class="dollar" type="number" name="capitol" value="0" required><br>
 
-<a href="/addSomething"><button id="addSomething" type="button" name="addSomething">Add Fund</button></a>
+  </form>
+</div>
 <div class="fundContainer">
   <p>
     {% if message == true %}
@@ -20,5 +29,7 @@
 </div>
 
 
-
+<!-- input is still sanitized server side so messing with this only messes
+  up your personal experience, I dont care to dummy proof server side -->
+<script src="../scripts/inputDummyProof.js"></script>
 {% endblock %}
