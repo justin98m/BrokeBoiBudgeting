@@ -16,31 +16,45 @@ function income(callback){
   })
 }
 function thisIncome(incomeId,callback){
-  let sql ="select * from FUND_INCOME where incomeId ="+ incomeId
+  let sql ="select * from FUND_INCOME where incomeId ="+incomeId +";"
+  sql += "select * from INCOME where incomeId ="+incomeId
+  sqlString.format(sql)
   start.runsql.query(sql,(err,income)=>{
     if(err){callback(false)}
     else{
-      console.log(income);
-      fundIds = consolidate.fundIds(income)
+      var fundIncome = income[0]
+      fundIds = consolidate.fundIds(fundIncome)
       fundNames(fundIds,income,callback)
     }
   })
 }
-function thisFund(fundId,callback){
+function thisFund(fundId,income,callback){
   let sql = "select expenseName, expenseCost, expenseDate"
   sql+= " from EXPENSE where fundId= " + fundId + ";"
-  sql += "select fundName, capitol from FUND where "
-  sql += "fundId ="+fundId
+  sql += "select fundName, capitol,fundId from FUND where "
+  sql += "fundId ="+fundId+ ";"
+  //does this fund have a income statement?
+  if(income != ""){
+    sql += "select incomeName, capitol,incomeDate from INCOME where incomeId ="
+    sql += income[0].incomeId
+    for (var i = 1; i < income.length; i++) {
+      sql += " or incomeId =" + income[i].incomeId
+    }
+  }
+
+  sqlString.format(sql)
+  console.log("SQL Statement: ",sql);
   start.runsql.query(sql,(err,fund)=>{
     if(err){callback(false)}
     else{
-        callback({expense:fund[0],details: fund[1]})
-        console.log(fund);
+        console.log("sql returning: ", fund);
+        callback({expense:fund[0],details: fund[1],income:fund[2]})
     }
   })
 }
 function fundSelectBar(callback){
-  let sql = "select fundName,fundId from FUND"
+  let sql = "select fundName,fundId from FUND where fundId not in("
+  sql += process.env.DELETEFUND + ")"
   start.runsql.query(sql,(err,funds)=>{
     if(err){
       callback(false)
@@ -51,7 +65,7 @@ function fundSelectBar(callback){
   })
 }
 function funds(callback){
-  let sql = "select * from FUND"
+  let sql = "select * from FUND where fundId not in("+process.env.DELETEFUND+")"
   start.runsql.query(sql,(err,funds)=>{
     if(err){
       callback(false)
@@ -93,6 +107,29 @@ function expenses(callback){
     }
   })
 }
+function thisExpense(expenseId,callback){
+  let sql = sqlString.format('select fundId from EXPENSE where expenseId=?',expenseId)
+  start.runsql.query(sql,(err,fundId)=>{
+    if(err){
+      console.log("Error: ", err);
+      callback(false)
+    }
+    else{
+      callback(fundId)
+    }
+  })
+}
+function fundIncomes(fundId,callback){
+  let sql = sqlString.format('select incomeId from FUND_INCOME where fundId=?',fundId)
+  start.runsql.query(sql,(err,income)=>{
+    if(err){
+      console.log("Error:",err);
+    }
+    else{
+      callback(income)
+    }
+  })
+}
 
 module.exports = {
   expenses,
@@ -101,5 +138,7 @@ module.exports = {
   fundSelectBar,
   thisFund,
   income,
-  thisIncome
+  thisIncome,
+  thisExpense,
+  fundIncomes
 }
