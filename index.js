@@ -15,9 +15,9 @@ const date = require('./scripts/convertDate.js')
 const value = require('./scripts/validate.js')
 const start = require('./scripts/connect.js')
 const consolidate = require('./scripts/consolidateFundIds')
-const request = require('./scripts/getFunds.js')
 const upload = require('./scripts/uploadData.js')
 const retrieve = require('./scripts/retrieveData.js')
+const remove = require('./scripts/deleteData.js')
 //turn req.body form data into readable and extractable information
 //tell nunjucks where to find njk/html files
 nunjucks.configure('./public/views', {
@@ -33,20 +33,32 @@ app.get('/errorPage',(req,res) =>{
 })
 
 app.get('/',(req,res) => {
+	var totalCapitol = 0
 	if(req.query.success == 'true')
 		var expenseAdded = true
 	else{var expenseAdded = false}
-	retrieve.fundSelectBar((funds)=>{
+	retrieve.funds((funds)=>{
 		if(!funds){
 			res.redirect('/errorPage')
 		}
 		else{
-			res.render('home.html',	data = {
-				layout:'layout.html',
-				cssDesktop: 'homeDesktop.css',
-				cssMobile: 'homeMobile.css',
-				fund : funds,
-				message : expenseAdded
+			for(i=0;i<funds.length;i++){
+				totalCapitol += funds[i].capitol
+			}
+			retrieve.fundSelectBar((funds)=>{
+				if(!funds){
+					res.redirect('/errorPage')
+				}
+				else{
+					res.render('home.html',	data = {
+						layout:'layout.html',
+						cssDesktop: 'homeDesktop.css',
+						cssMobile: 'homeMobile.css',
+						fund : funds,
+						message : expenseAdded,
+						Capitol: totalCapitol
+					})
+				}
 			})
 		}
 	})
@@ -84,13 +96,13 @@ app.get('/viewIncome',(req,res) =>{
 	retrieve.thisIncome(incomeId,(income)=>{
 		if(!income){res.redirect('/errorPage')}
 		else{
-			console.log(income);
+			console.log(income.category[1]);
 			res.render('viewIncome.html',data={
 				layout:'layout.html',
 				cssDesktop: 'viewIncomeDesktop.css',
 				cssMobile: 'viewIncomeMobile.css',
-				title : "This Income Statement",
-				income : income.category,
+				fundIncome : income.category[0],
+				income: income.category[1][0],
 				fund : income.fundKey
 			})
 		}
@@ -100,9 +112,10 @@ app.get('/viewIncome',(req,res) =>{
 app.get('/fund',(req,res) => {
 	if(req.query.success == "true")
 		var fundAdded = true
-	else {var fundAdded = false}
+	else {
+		var fundAdded = false
+	}
 	retrieve.funds((funds)=>{
-		console.log(fundAdded);
 		if(!funds){
 			res.redirect('/errorPage')
 		}
@@ -122,16 +135,25 @@ app.get('/fund',(req,res) => {
 app.get('/viewFund',(req,res)=>{
 
 	let fundId = req.query.id
-	retrieve.thisFund(fundId,(fund)=>{
-
-		res.render('viewFund.html', data ={
-		layout: 'layout.html',
-		expense: fund.expense,
-		fund: fund.details,
-		cssDesktop: 'viewFundDesktop.css',
-		cssMobile:  'viewFundMobile.css'
-		})
+	retrieve.fundIncomes(fundId,(income)=>{
+		if(!income){
+			res.redirect('/errorPage')
+		}
+		else{
+			retrieve.thisFund(fundId,income,(fund)=>{
+				console.log(fund.details[0]);
+				res.render('viewFund.html', data ={
+				layout: 'layout.html',
+				expense: fund.expense,
+				income: fund.income,
+				fund: fund.details[0],
+				cssDesktop: 'viewFundDesktop.css',
+				cssMobile:  'viewFundMobile.css'
+				})
+			})
+		}
 	})
+
 })
 
 app.get('/addIncome',(req,res)=>{
@@ -145,7 +167,7 @@ app.get('/addIncome',(req,res)=>{
 			message = "Thats not a valid Name"
 			break;
 	}
-	request.getFunds(start,(result)=>{
+	retrieve.fundSelectBar((result)=>{
 		if(result){
 			res.render('addIncome.html',data ={
 				layout: 'layout.html',
@@ -176,7 +198,6 @@ app.post('/addFund',(req,res)=>{
 
 	let input = {
 			fundName : req.body.fundName,
-			capitol: req.body.capitol,
 			date: today
 	}
 	upload.fund(input,(success)=>{
@@ -197,18 +218,19 @@ app.post('/addExpense',(req,res)=>{
 	console.log("Date: ",input.date);
 	date.convert(input.date)
 
-	if(!value.validate('dollar',input.expenseCost)){
-		res.redirect('/addSomething?badValue=dollar')
-		return false;
-	}
-	else if(!value.validate('name',input.expenseName)){
-		res.redirect('/addSomething?badValue=name')
-		return false
-	}
-
 	upload.expense(input,(success)=>{
 		if(!success){res.redirect('/errorPage')}
-		else{res.redirect('/?success=true')}
+		else{
+			upload.adjustFundCapitol(input.fundId,-1*input.expenseCost,(successB)=>{
+				if(!successB){
+					res.redirect('/errorPage')
+				}
+				else{
+					res.redirect('/?success=true')
+				}
+			})
+
+		}
 
 	})
 })
@@ -222,7 +244,65 @@ app.post('/addIncome',(req,res)=>{
 	upload.income(income,fund,(success)=>{
 		if(!success){res.redirect('/errorPage')}
 		else {
+			for (var i = 0; i < fund.length; i++) {
+				upload.adjustFundCapitol(fund[i].id,fund[i].capitol,(success1)=>{
+					if(!success1){
+						//aka Break
+						//yes this is lazy , do i care atm ? no
+						i = fund.length
+						console.log("Error");
+					}
+				})
+			}
 			res.redirect('/viewIncome?id='+success.incomeId)
+		}
+	})
+})
+app.get('/deleteFund',(req,res)=>{
+	var fundId = req.query.id
+	remove.funds(fundId,(success)=>{
+		if(!success)
+			res.redirect('/errorPage')
+		else{
+			res.redirect('/fund')
+		}
+	})
+})
+app.get('/deleteExpense',(req,res)=>{
+	var expenseId = req.query.id
+	var expenseAmount = req.query.amount
+	retrieve.thisExpense(expenseId,(fund)=>{
+		if(!fund){
+			res.redirect('/errorPage')
+		}
+		else{
+			upload.adjustFundCapitol(fund[0].fundId,expenseAmount,(success)=>{
+				if(!success){
+					res.redirect('/errorPage')
+				}
+				else{
+					remove.expense(expenseId,(success1)=>{
+						if(!success1){
+							res.redirect('/errorPage')
+						}
+						else{
+							res.redirect('/expense')
+						}
+					})
+				}
+			})
+		}
+	})
+
+})
+app.get('/deleteIncome',(req,res)=>{
+	var incomeId = req.query.id
+	remove.income(incomeId,(success)=>{
+		if(!success){
+			res.redirect('/errorPage')
+		}
+		else{
+			res.redirect('/income')
 		}
 	})
 })
