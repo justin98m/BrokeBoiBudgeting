@@ -33,6 +33,11 @@
       {% endfor %}
     </td>
     <td class="date">{{expense.expenseDate}}</td>
+    <td class="id">
+      <a href="/deleteExpense?id={{expense.expenseId}}&amount={{expense.expenseCost}}"><button>
+        Delete
+      </button></a>
+    </td>
   </tr>
   {% endfor %}
 </table>
