@@ -1,0 +1,5 @@
+-One Can enter Negative Expenses on the home page
+-Date in View Income IS not a date object and cant be converted to a more
+a more readable version with the dateToHTML function
+-expense Page will Crash if there are no expense as there will be no fundID to look for
+-Readability of Income on view fund pages is not clear
