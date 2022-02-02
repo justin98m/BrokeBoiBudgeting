@@ -10,20 +10,20 @@
   </div>
   <form id="form" action="/addIncome" method="post">
     <label class="label" id="incomeLabel"for="income">Income Name: </label>
-    <input id="incomeBar"type="text" name="incomeName" value="Add Income Here..." required><br>
+    <input id="incomeBar"type="text" name="incomeName" placeholder="Add Income Here..." required><br>
     <label id="dateLabel" class="label" for="date">Date of Income: </label>
     <input id="date" type="date" name="date" required>
     <br>
     <label id="incomeAmountLabel"  for="incomeAmount">Income Amount : $</label>
-    <input id="incomeAmountBar" min="0" class="dollar" type="number" name="incomeAmount" value="0" required><br>
+    <input id="incomeAmountBar" placeholder="0" min="0" class="dollar" type="number" name="incomeAmount" value="1" required><br>
     <p id="allocationInstructions">Allocate Income Dollars to Your Funds Below</p>
     <div id="fundsContainer">
       <div class="fund">
         <label  class="fundCapitolLabel" for="fund[x][capitol]"> Add: $</label>
-        <input required type="number" name="fund[0][capitol]" class="fundCapitol" min="0" value="0">
+        <input required type="number" name="fund[0][capitol]" class="fundCapitol" min="1" placeholder="0" value="0">
         <span class="to" >To</span>
         <select class="fundSelection" name="fund[0][id]" required >
-          <option disabled selected value="Select Fund">Select fund</option>
+          <option disabled selected value="">Select fund</option>
           {%for fund in fund%}
             <option value="{{fund.fundId}}">{{fund.fundName}}</option>
           {%endfor%}
