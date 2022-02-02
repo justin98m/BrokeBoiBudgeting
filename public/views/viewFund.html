@@ -1,7 +1,7 @@
-{%extends "layout.html" %}
+ {%extends "layout.html" %}
 {% block content %}
 
-<h2>{{fund.fundName}}</h2>
+<h2>{{fund.fundName}} : ${{fund.capitol}}</h2>
   <a href="/"><button id="addExpense" type="button" name="addExpense">Add expense</button></a>
   <div id="sortController">
     <p>Sort BY: </p>
@@ -19,18 +19,6 @@
       <th>Expense Cost</th>
       <th>Date</th>
     </tr>
-  <!-- Onces tables are added
-    for Transfer in Transfers will be added
-    for Income in income will be added
-    This will all be sorted before users sees by client js
-    So no need to sort in server and put in one list
-    !-->
-
-    <tr class="row">
-      <td class="name">Transfer Test</td>
-      <td class="dollars transfer" >$12</td>
-      <td class="date">12232023</td>
-    </tr>
   {% for expense in expense %}
     <tr class="row">
       <td class="name">{{expense.expenseName}}</td>
@@ -38,11 +26,22 @@
       <td class="date">{{expense.expenseDate}}</td>
     </tr>
     {% endfor %}
+  {% for income in income %}
+  <tr class="row">
+    <td class="name">{{income.incomeName}}</td>
+    <td class="dollars income">${{income.capitol}}</td>
+    <td class="date">{{income.incomeDate}}</td>
+  </tr>
+  {% endfor %}
   </table>
+  <button type="button" name="{{fund.fundId}}" id="delete">
+    Delete Fund
+  </button>
 
 
 
   <!-- type moduel need for importing functions within the js file -->
   <script src="../scripts/sort.js" type="module"></script>
+  <script src="../scripts/deleteFund.js"></script>
 
 {% endblock %}
