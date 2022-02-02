@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
- <p id="availableTitle"> Available Funds : </p>
+ <p id="availableTitle"> Available Funds : {{Capitol}} </p>
  <p id="availableFunds">${{avialableFunds}}</p>
 <form class="fund" action="/addExpense" method="post">
     <label id="expenseLabel"for="expenseName">Expense Name: </label>
