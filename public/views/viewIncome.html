@@ -1,7 +1,7 @@
 {%extends "layout.html" %}
 {% block content %}
-
-<h2>{{fund.fundName}}</h2>
+<p id="incomeName">{{income.incomeName}} : </p><span id="incomeCapitol">${{income.capitol}}</span>
+<p id="incomeDate">{{income.incomeDate}}</p>
   <a href="/addIncome"><button id="addIncome" type="button" >Add Income</button></a>
   <div id="sortController">
     <p>Sort BY: </p>
@@ -17,18 +17,22 @@
       <th>Fund Name</th>
       <th>Capitol Recieved</th>
     </tr>
-  {% for income in income %}
+  {% for fundIncome in fundIncome %}
     {% for fund in fund %}
-      {% if fund.fundId == income.fundId %}
+      {% if fund.fundId == fundIncome.fundId %}
         <tr class="row">
           <td class="name">{{fund.fundName}}</td>
-          <td class=dollars>${{income.capitol}}</td>
+          <td class=dollars>${{fundIncome.capitol}}</td>
         </tr>
       {%endif%}
     {%endfor%}
-    {% endfor %}
+  {% endfor %}
   </table>
+  <button type="button" name="{{income.incomeId}}" id="delete">
+    Delete Income
+  </button>
   <!-- type moduel need for importing functions within the js file -->
   <script src="../scripts/sort.js" type="module"></script>
+  <script src="../scripts/deleteIncome.js" type="module">  </script>
 
 {% endblock %}
