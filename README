@@ -4,22 +4,9 @@ The app itself if a Ledger that keeps a extended history of your expenses. I hav
 
 The app allows for you create funds which are just categories of what you spend your money on (Bills, Food, Frivolous Spending) One can also log expense which are associated with one of their created funds to subtract money from that fund. I am currently working on the income functionality so one can add money to various funds at once.
 
-What Works Right Now:
-  Fund creation
-  Viewing expenses from a specific fund with sorting capabilities
-  Expense creation
-  Viewing all expenses with the ability to sort them
+This app is a web app I intend to use for myself only. I do not want to go through the effort of making it user accessible for others right now as I'd rather work on other projects. There are some bugs I know about that wouldnt be good for your average user and I can tolerate them.
 
-What Will Work in the Future:
-  Deleting/Archiving Funds
-  Deleting expenses
-  Adding Income that can be shared by the existing funds
-  User Accounts
-    Implementing Sessions
-    Implementing Auth0 Authentication
-  Viewing income history
-
-  Technologies used
+Technologies Used:
     -Node.js
     -MySQL
     -Client Side Vanilla JavaScript
