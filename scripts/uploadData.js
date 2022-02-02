@@ -63,10 +63,26 @@ function expense(input,callback){
 function fund(input,callback){
   let values = [input.fundName,input.capitol,input.date]
   let sql = sqlString.format("insert into FUND(fundName,capitol,creationDate)"+
-  "values(?,?,?)",values)
+  "values(?,0,?)",values)
   start.runsql.query(sql,(err,result)=>{
     if(err){
       console.log("error: ",err)
+      callback(false)
+    }
+    else{
+      callback(true)
+    }
+  })
+}
+function adjustFundCapitol(fundId,amount,callback){
+  amount = sqlString.format(amount)
+  console.log("Amount after escape: ",amount);
+  amount = parseInt(amount)
+  console.log("Amount after parseInt: ",amount);
+  sql = "Update FUND set capitol = capitol +"+amount+" where fundId="+fundId
+  start.runsql.query(sql,(err,result)=>{
+    if(err){
+      console.log("Error:", err);
       callback(false)
     }
     else{
@@ -79,5 +95,6 @@ module.exports = {
   income,
   fundIncome,
   expense,
-  fund
+  fund,
+  adjustFundCapitol
 }
