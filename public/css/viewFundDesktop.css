@@ -1,12 +1,33 @@
 
-#addSomething:hover{
+#addExpense:hover{
  background-color: #9dff47;
 }
-#addSomething{
-  font-size: 40px;
-  height: 100px;
+#addExpense{
+  font-size: 30px;
+  height: 50px;
   display: inline-block;
-  margin-left: 80%;
+  float: right;
+}
+#sortController{
+  float: left;
+}
+#sortController p {
+  text-align: center;
+  text-decoration: underline;
+  font-size: 23px;
+  margin: 3px 0;
+}
+#sortBar{
+  height: 40px;
+  font-size: 17px;
+  text-align: center;
+  width: 145px;
+}
+.sortDirection{
+  height: 40px;
+  width: 30px;
+  font-size: 21px;
+  font-weight: bold;
 }
 tr:nth-child(even){
   background-color: white;
@@ -26,6 +47,17 @@ table{
 .expense{
   color: red;
 }
-.transfer{
+.income{
   color: #5b8f3c;
+}
+#delete{
+  font-size: 30px;
+  height: 50px;
+  display: inline-block;
+  margin-left: 70%;
+  color: red;
+  margin-top: 4px;
+}
+#delete:hover{
+  background-color: white;
 }

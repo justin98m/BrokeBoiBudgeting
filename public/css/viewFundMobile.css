@@ -1,6 +1,29 @@
 
-#addSomething:active{
+#addExpense:active{
  background-color: #9dff47;
+}
+#addExpense{
+  font-size: 17px;
+  margin-left: 70%;
+  margin-bottom: 2px;
+}
+#sortController{
+  text-align: center;
+}
+#sortController p{
+  margin-bottom: 2px;
+  text-decoration: underline;
+  font-size: 18px;
+  margin-top: 0px;
+}
+#sortBar{
+  font-size: 17px;
+  margin-bottom: 8px;
+  margin-top: 0px;
+}
+.sortDirection{
+  font-size: 18px;
+  font-weight: bold;
 }
 tr:nth-child(even){
   background-color: white;
@@ -15,6 +38,12 @@ table{
   color: red;
 }
 
-.transfer{
+.income{
   color: #5b8f3c;
+}
+#delete{
+  margin-top: 3px;
+  color: red;
+  font-size: 17px;
+  margin-left: 70%;
 }
