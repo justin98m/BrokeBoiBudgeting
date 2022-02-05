@@ -1,17 +1,17 @@
 {%extends "layout.html" %}
 {% block content %}
 
-
+<p id="allExpenses">All Expenses</p>
 <a href="/"><button id="addExpense" type="button" name="addExpense">Add an Expense</button></a>
 <div id="sortController">
-  <p>Sort BY: </p>
-  <select id="sortBar" name="sort">
+  <p id="sortBy" class="sort">Sort BY: </p>
+  <select class="sort" id="sortBar" name="sort">
     <option value="name">Expense Name</option>
     <option value="dollars">Cost</option>
     <option value="date" selected>Date</option>
   </select>
-  <button id="active" class="sortDirection" name="ascend">&#8593;</button>
-  <button id="inactive" class="sortDirection" name="descend">&#8595</button>
+  <button id="active" class="sortDirection sort" name="ascend">&#8593;</button>
+  <button id="inactive" class="sortDirection sort" name="descend">&#8595</button>
 </div>
 <table>
   <tr>

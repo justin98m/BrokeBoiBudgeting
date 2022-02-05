@@ -1,10 +1,50 @@
-
-#addSomething:active{
+#allExpenses{
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+  font-size: 30px;
+  margin: 3px 0;
+}
+.sort{
+  font-family: 'Zen Kurenaido', sans-serif;
+  font-weight: bold;
+}
+#addExpense:hover{
  background-color: #9dff47;
+}
+#addExpense{
+  font-family: 'Zen Kurenaido', sans-serif;
+  font-size: 17px;
+  font-weight: bold;
+  height: 40px;
+  width: 130px;
+  display: inline-block;
+  margin-left: 65%;
+  margin-bottom: 5px;
+}
+#sortController{
+  margin-top: 0px;
+  margin-bottom: 5px; 
+}
+#sortBy{
+  margin-top: 0px;
+  font-size:20px;
+  text-align: center;
+  margin-bottom: 3px;
+}
+#sortBar{
+  margin-left: 22%;
+  font-size: 16px;
+  text-align: center;
+}
+.sortDirection{
+  height: 30px;
+  font-size: 15px;
+  margin-right: 3px; 
 }
 tr:nth-child(even){
   background-color: white;
 }
 table{
   border: solid;
+  margin-bottom: 15px;
 }

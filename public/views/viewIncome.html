@@ -1,10 +1,12 @@
 {%extends "layout.html" %}
 {% block content %}
-<p id="incomeName">{{income.incomeName}} : </p><span id="incomeCapitol">${{income.capitol}}</span>
-<p id="incomeDate">{{income.incomeDate}}</p>
+<div id="titleContainer">
+  <p id="incomeName">{{income.incomeName}} : </p><span id="incomeCapitol">${{income.capitol}}</span>
+  <p id="incomeDate">{{income.incomeDate}}</p>
+</div>
   <a href="/addIncome"><button id="addIncome" type="button" >Add Income</button></a>
   <div id="sortController">
-    <p>Sort BY: </p>
+    <p id="sortBy">Sort BY: </p>
     <select id="sortBar" name="sort">
       <option value="name">Fund Name</option>
       <option value="dollars">Capitol recieved</option>

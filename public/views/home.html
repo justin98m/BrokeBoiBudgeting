@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
 
- <p id="availableTitle"> Available Funds : {{Capitol}} </p>
- <p id="availableFunds">${{avialableFunds}}</p>
+ <p class="heading" id="availableTitle"> Available Funds </p>
+ <p class="heading" id="availableFunds">${{Capitol}}</p>
 <form class="fund" action="/addExpense" method="post">
     <label id="expenseLabel"for="expenseName">Expense Name: </label>
     <input id="expenseBar"  type="text" name="expenseName" required>
     <label id="costLabel"for="cost">Amount:$</label>
-    <input id="costBar" class="dollar" type="text" name="cost" required>
-    <label for="date">Date of Expense: </label>
-    <input id="date" type="date" name="date" >
+    <input id="costBar" class="dollar" type="text" name="cost" required><br> 
+    <label id="dateLabel"for="date">Date of Expense: </label>
+    <input id="dateBar" type="date" name="date" >
       <select id="fundSelection" name="fundName" >
         <option disabled selected value="Select Fund">Select Fund</option>
         {%for fund in fund%}

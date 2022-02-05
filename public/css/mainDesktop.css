@@ -3,19 +3,18 @@ html{background-color: #f7af6a;}
   text-align: center;
   padding-top: 20px;
   border: solid white;
-  margin-top: 5%
+  margin-top: 1%
 }
 .links button{
-  width: 310px;
+  font-family: 'Quicksand', sans-serif;
+  width: 225px;
   border: solid blue;
-  margin-left:40px;
-  margin-right: 60px;
-  height: 65px;
+  margin-left:10px;
+  margin-right: 10px;
+  height: 55px;
   font-size: 36px;
 
 }
-
-
 .links button:hover{
  background-color: #9dff47;
 }

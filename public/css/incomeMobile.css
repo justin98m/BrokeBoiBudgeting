@@ -1,10 +1,39 @@
-
-#addSomething:active{
- background-color: #9dff47;
+html{
+  font-family: 'Zen Kurenaido', sans-serif;
+}
+#yourIncome{
+  text-align: center;
+ font-family: 'Quicksand', sans-serif;
+ font-size: 24px;
+}
+#addIncome{
+  margin-left: 65%;
+  font-size: 18px;
+}
+#sortController{
+  text-align: center;
+}
+#sortBy{
+  margin-bottom: 1px;
+  margin-top: 2px;
+  font-size: 20px;
+  font-weight: bold;
+}
+#sortBar{
+  font-family: 'Zen Kurenaido', sans-serif;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
+}
+.sortDirection{
+  height: 30px;
+  font-size: 20px;
+  font-weight: bold;
 }
 tr:nth-child(even){
   background-color: white;
 }
 table{
+  margin-bottom: 15px;
   border: solid;
 }

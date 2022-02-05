@@ -1,4 +1,8 @@
-
+h2{
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+  font-size: 35px;
+}
 #addExpense:hover{
  background-color: #9dff47;
 }
@@ -14,12 +18,17 @@
 #sortController p {
   text-align: center;
   text-decoration: underline;
-  font-size: 23px;
+  font-size: 29px;
   margin: 3px 0;
+ font-family: 'Zen Kurenaido', sans-serif;
+  
 }
+
 #sortBar{
+  font-family: 'Zen Kurenaido', sans-serif;
   height: 40px;
-  font-size: 17px;
+  font-size: 20px;
+  font-weight: bold;
   text-align: center;
   width: 145px;
 }

@@ -1,16 +1,28 @@
+.heading{
+font-family: 'Quicksand', sans-serif;
+font-size: 15px;
+}
+label{
+  font-family: 'Quicksand', sans-serif;
+}
+input{
+  font-family: 'Quicksand', sans-serif;
+}
 #availableTitle{
-  font-size: 30px;
+  font-size: 25px;
   margin-top: 1px;
-  margin-left: 13%;
+  text-align: center;
+  text-decoration: underline;
   margin-bottom: 1px;
   font-weight: bold;
   color: white;
 }
 #availableFunds{
-  margin: 0px 180px;
+  text-align: center;
+  margin : 3px 0;
   font-weight: bold;
   font-size: 30px;
-   color: #5b8f3c;
+  color: #5b8f3c;
   }
 #fundSelection{
   Margin-top:6px;
@@ -21,41 +33,40 @@
   text-align: center;
 }
 #expenseLabel{
-  font-size: 30px;
-  margin-left: 20%;
+  font-size: 19px;
+  margin-left: 116px;
   padding: 4px;
   font-weight: bold ;
-  color: white;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 #expenseBar{
   width: 72%;
-  margin-left: 12%;
-  height: 30px;
-  margin-top: 15px;
+  margin-left: 13%;
+  height: 20px;
+  margin-top: 5px;
   margin-bottom: 14px;
 }
-#amountLabel{
-  font-size:30px;
+#costLabel{
+  font-size:19px;
   font-weight: bold;
-  margin-left: 27%;
-  color: white;  
-}
-#amountBar{
+  margin-left: 12%;
+ }
+#costBar{
   margin-top: 8px;
   margin-bottom: 8px;
   width: 50%;
-  margin-left: 85px;
 
 }
-#collins{
-  display: none;
+#dateLabel{
+  font-size: 19px;
+  margin-left: 13%;
+  font-weight: bold;
 }
 #submit{
   margin-left: 25%;
   margin-top: 16px;
   width: 50%;
-  height: 70px;
+  height: 60px;
   font-size: 25px;
   color: #5b8f3c;
   font-weight: bold;
@@ -63,5 +74,5 @@
 .earn{
   margin-top: 12px;
   width: 100%;
-  margin: 10px 0px;
+  margin: 5px 0px;
 }

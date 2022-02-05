@@ -1,25 +1,34 @@
-
+h2{
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+}
 #addExpense:active{
  background-color: #9dff47;
 }
 #addExpense{
+  font-family: 'Quicksand', sans-serif;
   font-size: 17px;
   margin-left: 70%;
   margin-bottom: 2px;
 }
 #sortController{
+  font-family: 'Zen Kurenaido', sans-serif;
   text-align: center;
 }
 #sortController p{
   margin-bottom: 2px;
   text-decoration: underline;
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: bold;
   margin-top: 0px;
 }
 #sortBar{
+  font-family: 'Zen Kurenaido', sans-serif;
   font-size: 17px;
+  font-weight: bold;
   margin-bottom: 8px;
   margin-top: 0px;
+  text-align: center;
 }
 .sortDirection{
   font-size: 18px;
@@ -46,4 +55,5 @@ table{
   color: red;
   font-size: 17px;
   margin-left: 70%;
+  margin-bottom: 15px;
 }
