@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Login Page</title>
+    <link type="text/css" rel="stylesheet" media="screen and (min-width:700px)"href="/css/mainDesktop.css">
+    <link type="text/css" rel="stylesheet" media="screen and (max-width:699px)"href="/css/mainMobile.css">
+
+    <!-- allows for each page to insert its own css file superseeding the main file -->
+    <link type="text/css" rel="stylesheet" media="screen and (min-width:700px)"href="/css/{{cssDesktop}}">
+    <link type="text/css" rel="stylesheet" media="screen  and (max-width:699px)"href="/css/{{cssMobile}}">
+  </head>
+  <body>
+    {% block content %}
+
+    <p id="login">Login Here</p>
+    <form  action="/login" method="post">
+      <label for="pass">Password:</label>
+      <input type="password" id="pass" name="pass" >
+      <input type="submit" id = submit value="Submit">
+    </form>
+    {% endblock %}
+
+  </body>
+</html>
