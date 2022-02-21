@@ -14,6 +14,9 @@ var displaySort = function (rowData,htmlTable,direction){
       if(rowData[i].id){
         htmlTable[i].querySelector(".id").outerHTML = rowData[i].id
       }
+      if(rowData[i].fund){
+        htmlTable[i].querySelector(".fund").outerHTML = rowData[i].fund
+      }
       htmlTable[i].querySelector(".dollars").innerHTML = dollars
       htmlTable[i].querySelector(".dollars").classList = rowData[i].classList
       htmlTable[i].querySelector(".name").innerHTML = rowData[i].name
@@ -32,6 +35,9 @@ var displaySort = function (rowData,htmlTable,direction){
       }
       if(rowData[i].id){
           htmlTable[rowpos].querySelector(".id").outerHTML = rowData[i].id
+      }
+      if(rowData[i].fund){
+        htmlTable[rowpos].querySelector(".fund").outerHTML = rowData[i].fund
       }
       htmlTable[rowpos].querySelector(".dollars").innerHTML = dollars
       htmlTable[rowpos].querySelector(".dollars").classList = rowData[i].classList

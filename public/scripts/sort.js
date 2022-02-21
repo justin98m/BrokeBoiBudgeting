@@ -54,7 +54,7 @@ function callBubblsort(sortBy){
 //put html table information in to an array of objects containing all column info
 function storeRowData(){
   var rowData = new Array()
-  var type,tableRow,date,id
+  var type,tableRow,date,id,fund
   for (var i = 0; i <htmlTable.length; i++) {
     //a copy is made so when values of htmlTable are written over the
     //row Data values wont change, specifically classList
@@ -70,7 +70,11 @@ function storeRowData(){
     if(tableRow.querySelector(".id") !== null){
       id = tableRow.querySelector(".id").outerHTML
     }
-    else{id = false}
+    else{id=false}
+    if(tableRow.querySelector(".fund") !== null){
+      fund = tableRow.querySelector(".fund").outerHTML
+    }
+    else{fund = false}
 
     rowData[i] = {
       date: date,
@@ -79,9 +83,10 @@ function storeRowData(){
       //get dollar string, remove dollar sign and turn into a number
       dollars: parseInt(tableRow.querySelector(".dollars").innerHTML.slice(1)),
       name: tableRow.querySelector(".name").innerHTML,
-      id : id
+      id : id,
+      fund: fund
     }
-    console.log("The Id: ",rowData[i].id);
+  console.log("This fund: ",fund);
   }
   return rowData
 }
