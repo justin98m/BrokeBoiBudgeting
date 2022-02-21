@@ -12,8 +12,16 @@ var con = mysql.createConnection({
 });
 
 con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
+  if (err){
+    con = mysql.createConnection({
+            //should be a hidden env var
+            host: process.env.REMOTEMYSQLHOST,
+            user: process.env.REMOTEMYSQLUSER,
+            password: process.env.REMOTEMYSQLPASS,
+            database: process.env.DATABASE,
+            multipleStatements: true
+    });
+  }
 });
 
 exports.runsql = con;
