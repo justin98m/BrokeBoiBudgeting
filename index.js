@@ -184,11 +184,25 @@ app.get('/viewFund',(req,res)=>{
 			}
 			else{
 				retrieve.thisFund(fundId,income,(fund)=>{
+					//income holds incomeid and capitol for this fund
+					//fund.income holds the date and name
+					//for loop will sync the data into one Dictionary
+					for (var i = 0; i < income.length; i++) {
+						for (var c = 0; c < fund.income.length; c++) {
+							if(fund.income[c].incomeId == income[i].incomeId){
+								income[i].incomeName = fund.income[c].incomeName
+								income[i].incomeDate = fund.income[c].incomeDate
+								break;
+							}
+							console.log("finished Check");
+						}
+					}
+					console.log("Income After",income);
 					console.log(fund.details[0]);
 					res.render('viewFund.html', data ={
 					layout: 'layout.html',
 					expense: fund.expense,
-					income: fund.income,
+					income: income,
 					fund: fund.details[0],
 					cssDesktop: 'viewFundDesktop.css',
 					cssMobile:  'viewFundMobile.css'

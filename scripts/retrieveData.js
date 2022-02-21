@@ -35,7 +35,7 @@ function thisFund(fundId,income,callback){
   sql += "fundId ="+fundId+ ";"
   //does this fund have a income statement?
   if(income != ""){
-    sql += "select incomeName, capitol,incomeDate from INCOME where incomeId ="
+    sql += "select incomeName,incomeDate,incomeId from INCOME where incomeId ="
     sql += income[0].incomeId
     for (var i = 1; i < income.length; i++) {
       sql += " or incomeId =" + income[i].incomeId
@@ -120,7 +120,7 @@ function thisExpense(expenseId,callback){
   })
 }
 function fundIncomes(fundId,callback){
-  let sql = sqlString.format('select incomeId from FUND_INCOME where fundId=?',fundId)
+  let sql = sqlString.format('select incomeId,capitol from FUND_INCOME where fundId=?',fundId)
   start.runsql.query(sql,(err,income)=>{
     if(err){
       console.log("Error:",err);
