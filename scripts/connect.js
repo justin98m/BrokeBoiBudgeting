@@ -2,8 +2,9 @@
 const mysql = require('mysql');
 const dotenv = require('dotenv');
 dotenv.config();
-var con = mysql.createConnection({
+var pool = mysql.createPool({
         //should be a hidden env var
+        connectionLimit:5,
         host: process.env.REMOTEMYSQLHOST,
         user: process.env.REMOTEMYSQLUSER,
         password: process.env.REMOTEMYSQLPASS,
@@ -11,17 +12,5 @@ var con = mysql.createConnection({
         multipleStatements: true
 });
 
-con.connect(function(err) {
-  if (err){
-    con = mysql.createConnection({
-            //should be a hidden env var
-            host: process.env.REMOTEMYSQLHOST,
-            user: process.env.REMOTEMYSQLUSER,
-            password: process.env.REMOTEMYSQLPASS,
-            database: process.env.DATABASE,
-            multipleStatements: true
-    });
-  }
-});
 
-exports.runsql = con;
+module.exports = pool;
