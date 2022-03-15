@@ -7,25 +7,22 @@ const start = require('./connect.js')
 const consolidate = require('./consolidateFundIds')
 function income(callback){
   let sql = "select * from INCOME"
-  start.runsql.query(sql,(err,income)=>{
-    if(err){return false}
-    else{
-      callback(income)
-      console.log(income);
-    }
+  start.query(sql,(err,income)=>{
+    if(err)
+      return callback(err)
+    callback(null,income)
   })
 }
 function thisIncome(incomeId,callback){
   let sql ="select * from FUND_INCOME where incomeId ="+incomeId +";"
   sql += "select * from INCOME where incomeId ="+incomeId
   sqlString.format(sql)
-  start.runsql.query(sql,(err,income)=>{
-    if(err){callback(false)}
-    else{
-      var fundIncome = income[0]
-      fundIds = consolidate.fundIds(fundIncome)
-      fundNames(fundIds,income,callback)
-    }
+  start.query(sql,(err,income)=>{
+    if(err)
+      return callback(err)
+    var fundIncome = income[0]
+    fundIds = consolidate.fundIds(fundIncome)
+    fundNames(fundIds,income,callback)
   })
 }
 function thisFund(fundId,income,callback){
@@ -43,36 +40,29 @@ function thisFund(fundId,income,callback){
   }
 
   sqlString.format(sql)
-  console.log("SQL Statement: ",sql);
-  start.runsql.query(sql,(err,fund)=>{
-    if(err){callback(false)}
-    else{
-        console.log("sql returning: ", fund);
-        callback({expense:fund[0],details: fund[1],income:fund[2]})
-    }
+  start.query(sql,(err,fund)=>{
+    if(err)
+      return callback(err)
+    callback(null,{expense:fund[0],details: fund[1],income:fund[2]})
+
   })
 }
 function fundSelectBar(callback){
-  let sql = "select fundName,fundId from FUND where fundId not in("
-  sql += process.env.DELETEFUND + ")"
-  start.runsql.query(sql,(err,funds)=>{
-    if(err){
-      callback(false)
-    }
-    else{
-      callback(funds)
-    }
-  })
+    let sql = "select fundName,fundId from FUND where fundId not in("
+    sql += process.env.DELETEFUND + ")"
+    start.query(sql,(err,result)=>{
+      if(err)
+        return callback(err)
+      callback(null,result)
+    })
+
 }
 function funds(callback){
   let sql = "select * from FUND where fundId not in("+process.env.DELETEFUND+")"
-  start.runsql.query(sql,(err,funds)=>{
-    if(err){
-      callback(false)
-    }
-    else{
-      callback(funds)
-    }
+  start.query(sql,(err,result)=>{
+    if(err)
+      return callback(err)
+    callback(null,result)
   })
 }
 //category can represent income or expense as
@@ -83,51 +73,35 @@ function fundNames(fundId,category,callback){
     sql += " or fundid="+fundId[i]
   }
   console.log(sql);
-  start.runsql.query(sql,(err,fundKey)=>{
-    if(err){
-      console.log("error: ",err);
-      callback(false)
-    }
-    else{
-      callback({fundKey: fundKey,category :category})
-    }
+  start.query(sql,(err,fundKey)=>{
+    if(err)
+      return callback(err)
+    callback(null,{fundKey: fundKey,category :category})
   })
 }
 function expenses(callback){
   let sql = "select * from EXPENSE"
-  start.runsql.query(sql,(err,expense)=>{
-    if(err){
-      console.log('error: ',err)
-      callback(false)
-    }
-    else{
-      var fundIds = consolidate.fundIds(expense)
-      fundNames(fundIds,expense,callback)
-
-    }
+  start.query(sql,(err,expense)=>{
+    if(err)
+      return callback(err)
+    var fundIds = consolidate.fundIds(expense)
+    fundNames(fundIds,expense,callback)
   })
 }
 function thisExpense(expenseId,callback){
   let sql = sqlString.format('select fundId from EXPENSE where expenseId=?',expenseId)
-  start.runsql.query(sql,(err,fundId)=>{
-    if(err){
-      console.log("Error: ", err);
-      callback(false)
-    }
-    else{
-      callback(fundId)
-    }
+  start.query(sql,(err,fundId)=>{
+    if(err)
+      return callback(err)
+    callback(null,fundId)
   })
 }
 function fundIncomes(fundId,callback){
   let sql = sqlString.format('select incomeId,capitol from FUND_INCOME where fundId=?',fundId)
-  start.runsql.query(sql,(err,income)=>{
-    if(err){
-      console.log("Error:",err);
-    }
-    else{
-      callback(income)
-    }
+  start.query(sql,(err,income)=>{
+    if(err)
+      return callback(err)
+    callback(null,income)
   })
 }
 
