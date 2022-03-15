@@ -49,217 +49,155 @@ app.get('/errorPage',(req,res) =>{
 })
 app.get('/',(req,res) => {
 	session = req.session
-	if(session.userid){
-		var totalCapitol = 0
-		if(req.query.success == 'true')
-			var expenseAdded = true
-		else{var expenseAdded = false}
-		retrieve.funds((funds)=>{
-			if(!funds){
-				res.redirect('/errorPage')
-			}
-			else{
-				for(i=0;i<funds.length;i++){
-					totalCapitol += funds[i].capitol
-				}
-				retrieve.fundSelectBar((funds)=>{
-					if(!funds){
-						res.redirect('/errorPage')
-					}
-					else{
-						res.render('home.html',	data = {
-							layout:'layout.html',
-							cssDesktop: 'homeDesktop.css',
-							cssMobile: 'homeMobile.css',
-							fund : funds,
-							message : expenseAdded,
-							Capitol: totalCapitol
-						})
-					}
-				})
-			}
-		})
-	}
+	if(!session.userid)
+		return res.redirect('/login')
+	var totalCapitol = 0
+	if(req.query.success == 'true')
+		var expenseAdded = true
 	else{
-		res.redirect('/login')
+		var expenseAdded = false
 	}
+	retrieve.funds((err,funds)=>{
+		if(err)
+			return res.redirect('/errorPage')
+		for(i=0;i<funds.length;i++){
+			totalCapitol += funds[i].capitol
+		}
+		retrieve.fundSelectBar((err,funds)=>{
+			if(err)
+				return res.redirect('/errorPage')
+			res.render('home.html',	data = {
+				layout:'layout.html',
+				cssDesktop: 'homeDesktop.css',
+				cssMobile: 'homeMobile.css',
+				fund : funds,
+				message : expenseAdded,
+				Capitol: totalCapitol
+			})
+		})
+	})
 })
 app.get('/expense',(req,res) =>{
 	session = req.session
-	if(session.userid){
-		retrieve.expenses((expenses)=>{
-			if(!expenses){
-				res.redirect('/errorPage')
-			}
-			else{
-				res.render('expense.html',data = {
-					layout: 'layout.html',
-					cssDesktop: 'expenseDesktop.css',
-					cssMobile: 'expenseMobile.css',
-					fund: expenses.fundKey,
-					expense: expenses.category,
-					title: 'Here Are Your Expenses',
-				})
-			}
+	if(!session.userid)
+		return res.redirect('/login')
+	retrieve.expenses((err,expenses)=>{
+		if(err)
+			return res.redirect('/errorPage')
+		res.render('expense.html',data = {
+			layout: 'layout.html',
+			cssDesktop: 'expenseDesktop.css',
+			cssMobile: 'expenseMobile.css',
+			fund: expenses.fundKey,
+			expense: expenses.category,
+			title: 'Here Are Your Expenses',
 		})
-	}
-	else{
-		res.redirect('/login')
-	}
+	})
 })
 app.get('/income',(req,res) => {
 	session = req.session
-	if(session.userid){
-		retrieve.income((income)=>{
-			res.render('income.html',data ={
-				layout: 'layout.html',
-				cssDesktop: 'incomeDesktop.css',
-				cssMobile: 'incomeMobile.css',
-				income: income
-			})
+	if(!session.userid)
+		return res.redirect('/login')
+	retrieve.income((err,income)=>{
+		if(err)
+			return res.redirect('/errorPage')
+		res.render('income.html',data ={
+			layout: 'layout.html',
+			cssDesktop: 'incomeDesktop.css',
+			cssMobile: 'incomeMobile.css',
+			income: income
 		})
-	}
-	else{
-		res.redirect('/login')
-	}
+	})
 })
 app.get('/viewIncome',(req,res) =>{
 	session = req.session
-	if(session.userid){
-		let incomeId = req.query.id
-		retrieve.thisIncome(incomeId,(income)=>{
-			if(!income){res.redirect('/errorPage')}
-			else{
-				console.log(income.category[1]);
-				res.render('viewIncome.html',data={
-					layout:'layout.html',
-					cssDesktop: 'viewIncomeDesktop.css',
-					cssMobile: 'viewIncomeMobile.css',
-					fundIncome : income.category[0],
-					income: income.category[1][0],
-					fund : income.fundKey
-				})
-			}
+	if(!session.userid)
+		return res.redirect('/login')
+	let incomeId = req.query.id
+	retrieve.thisIncome(incomeId,(err,income)=>{
+		if(err)
+			res.redirect('/errorPage')
+		res.render('viewIncome.html',data={
+			layout:'layout.html',
+			cssDesktop: 'viewIncomeDesktop.css',
+			cssMobile: 'viewIncomeMobile.css',
+			fundIncome : income.category[0],
+			income: income.category[1][0],
+			fund : income.fundKey
 		})
-	}
-	else{
-		res.redirect('/login')
-	}
+	})
 })
 app.get('/fund',(req,res) => {
 	session = req.session
-	if(session.userid){
-		if(req.query.success == "true")
-			var fundAdded = true
-		else {
-			var fundAdded = false
-		}
-		retrieve.funds((funds)=>{
-			if(!funds){
-				res.redirect('/errorPage')
-			}
-			else{
-				res.render('fund.html',data = {
-					layout: 'layout.html',
-					cssDesktop: 'fundDesktop.css',
-					cssMobile:'fundMobile.css',
-					title: 'Funds',
-					fund: funds,
-					message : fundAdded
-				})
-			}
+	if(!session.userid)
+		return res.redirect('/login')
+	if(req.query.success == "true")
+		var fundAdded = true
+	else {
+		var fundAdded = false
+	}
+	retrieve.funds((err,funds)=>{
+		if(err)
+			return res.redirect('/errorPage')
+		res.render('fund.html',data = {
+			layout: 'layout.html',
+			cssDesktop: 'fundDesktop.css',
+			cssMobile:'fundMobile.css',
+			title: 'Funds',
+			fund: funds,
+			message : fundAdded
 		})
-	}
-	else{
-		res.redirect('/login')
-	}
+	})
 })
 app.get('/viewFund',(req,res)=>{
 	session = req.session
-	if(session.userid){
-		let fundId = req.query.id
-		retrieve.fundIncomes(fundId,(income)=>{
-			if(!income){
-				res.redirect('/errorPage')
-			}
-			else{
-				retrieve.thisFund(fundId,income,(fund)=>{
-					//income holds incomeid and capitol for this fund
-					//fund.income holds the date and name
-					//for loop will sync the data into one Dictionary
-					for (var i = 0; i < income.length; i++) {
-						for (var c = 0; c < fund.income.length; c++) {
-							if(fund.income[c].incomeId == income[i].incomeId){
-								income[i].incomeName = fund.income[c].incomeName
-								income[i].incomeDate = fund.income[c].incomeDate
-								break;
-							}
-							console.log("finished Check");
-						}
+	if(!session.userid)
+		return res.redirect('/login')
+	let fundId = req.query.id
+	retrieve.fundIncomes(fundId,(err,income)=>{
+		if(err)
+			return res.redirect('/errorPage')
+		retrieve.thisFund(fundId,income,(err,fund)=>{
+			if(err)
+				return res.redirect('/errorPage')
+			//income holds incomeid and capitol for this fund
+			//fund.income holds the date and name
+			//for loop will sync the data into one Dictionary
+			for (var i = 0; i < income.length; i++) {
+				for (var c = 0; c < fund.income.length; c++) {
+					if(fund.income[c].incomeId == income[i].incomeId){
+						income[i].incomeName = fund.income[c].incomeName
+						income[i].incomeDate = fund.income[c].incomeDate
+						break;
 					}
-					console.log("Income After",income);
-					console.log(fund.details[0]);
-					res.render('viewFund.html', data ={
-					layout: 'layout.html',
-					expense: fund.expense,
-					income: income,
-					fund: fund.details[0],
-					cssDesktop: 'viewFundDesktop.css',
-					cssMobile:  'viewFundMobile.css'
-					})
-				})
+				}
 			}
+			res.render('viewFund.html', data ={
+			layout: 'layout.html',
+			expense: fund.expense,
+			income: income,
+			fund: fund.details[0],
+			cssDesktop: 'viewFundDesktop.css',
+			cssMobile:  'viewFundMobile.css'
+			})
 		})
-	}
-	else{
-		res.redirect('/login')
-	}
-
+	})
 })
 app.get('/addIncome',(req,res)=>{
 	session = req.session
-	if(session.userid){
-		let error = req.query.badValue
-		let message = false
-		switch (error) {
-			case 'dollar':
-				message = "I repeat, YOU CANT ENTER THAT AS A DOLLAR AMOUNT"
-				break;
-			case 'name':
-				message = "Thats not a valid Name"
-				break;
-		}
-		retrieve.fundSelectBar((result)=>{
-			if(result){
-				res.render('addIncome.html',data ={
-					layout: 'layout.html',
-					cssDesktop: 'addIncomeDesktop.css',
-					cssMobile: 'addIncomeMobile.css',
-					fund: result,
-					title: 'Create A New Income Statement'
-				})
-				if(message){alert(message)}
-			}
-			else{res.redirect('/errorPage')}
-		})
-	}
-	else{
-		res.redirec('/login')
-	}
-})
-app.get('/addFund',(req,res)=>{
-	session = req.session
-	if(session.userid){
-		res.render('addFund.html',data = {
+	if(!session.userid)
+		return res.redirect('/login')
+	retrieve.fundSelectBar((err,result)=>{
+		if(err)
+			return res.redirect('/errorPage')
+		res.render('addIncome.html',data ={
 			layout: 'layout.html',
-			cssDesktop: 'addFundDesktop.css',
-			cssMobile: 'addFundMobile.css',
-			title: 'Add A Fund Here'
+			cssDesktop: 'addIncomeDesktop.css',
+			cssMobile: 'addIncomeMobile.css',
+			fund: result,
+			title: 'Create A New Income Statement'
 		})
-	}
-	else{
-		res.redirect('/login')
-	}
+	})
 })
 //I only want the content accessible to me hence the MASTERPASS
 app.post('/login',(req,res)=>{
@@ -283,11 +221,11 @@ app.post('/addFund',(req,res)=>{
 			fundName : req.body.fundName,
 			date: today
 	}
-	upload.fund(input,(success)=>{
-		if(!success){res.redirect('/errorPage')}
+	upload.fund(input,(err,success)=>{
+		if(err)
+			return res.redirect('/errorPage')
 		res.redirect('/fund?success=true')
 	})
-
 })
 app.post('/addExpense',(req,res)=>{
 	let input = {
@@ -297,23 +235,15 @@ app.post('/addExpense',(req,res)=>{
 		//the name is the ID as the server can ask the db for the name of a fundId
 		fundId : req.body.fundName
 	}
-	console.log("Date: ",input.date);
 	date.convert(input.date)
-
-	upload.expense(input,(success)=>{
-		if(!success){res.redirect('/errorPage')}
-		else{
-			upload.adjustFundCapitol(input.fundId,-1*input.expenseCost,(successB)=>{
-				if(!successB){
-					res.redirect('/errorPage')
-				}
-				else{
-					res.redirect('/?success=true')
-				}
-			})
-
-		}
-
+	upload.expense(input,(err,success)=>{
+		if(err)
+			return res.redirect('/errorPage')
+		upload.adjustFundCapitol(input.fundId,-1*input.expenseCost,(err)=>{
+			if(err)
+				return res.redirect('/errorPage')
+			res.redirect('/?success=true')
+		})
 	})
 })
 app.post('/addIncome',(req,res)=>{
@@ -323,87 +253,62 @@ app.post('/addIncome',(req,res)=>{
 		capitol : req.body.incomeAmount
 	}
 	fund = req.body.fund
-	upload.income(income,fund,(success)=>{
-		if(!success){res.redirect('/errorPage')}
-		else {
-			for (var i = 0; i < fund.length; i++) {
-				upload.adjustFundCapitol(fund[i].id,fund[i].capitol,(success1)=>{
-					if(!success1){
-						//aka Break
-						//yes this is lazy , do i care atm ? no
-						i = fund.length
-						console.log("Error");
-					}
-				})
-			}
-			res.redirect('/viewIncome?id='+success.incomeId)
+	upload.income(income,fund,(err,success)=>{
+		if(err)
+			return res.redirect('/errorPage')
+		for (var i = 0; i < fund.length; i++) {
+			upload.adjustFundCapitol(fund[i].id,fund[i].capitol,(err)=>{
+				if(err){
+					return res.redirect('/errorPage')
+				}
+			})
 		}
+		res.redirect('/viewIncome?id='+success.incomeId)
 	})
 })
 app.get('/deleteFund',(req,res)=>{
 	session = req.session
-	if(session.userid){
-		var fundId = req.query.id
-		remove.funds(fundId,(success)=>{
-			if(!success)
-				res.redirect('/errorPage')
-			else{
-				res.redirect('/fund')
-			}
-		})
-	}
-	else{
-		res.redirect('/login')
-	}
+	if(!session.userid)
+		return res.redirect('/login')
+	var fundId = req.query.id
+	remove.funds(fundId,(err)=>{
+		if(err)
+			return res.redirect('/errorPage')
+		return res.redirect('/fund')
+	})
 })
 app.get('/deleteExpense',(req,res)=>{
 	session = req.session
-	if(session.userid){
-		var expenseId = req.query.id
-		var expenseAmount = req.query.amount
-		retrieve.thisExpense(expenseId,(fund)=>{
-			if(!fund){
-				res.redirect('/errorPage')
-			}
-			else{
-				upload.adjustFundCapitol(fund[0].fundId,expenseAmount,(success)=>{
-					if(!success){
-						res.redirect('/errorPage')
-					}
-					else{
-						remove.expense(expenseId,(success1)=>{
-							if(!success1){
-								res.redirect('/errorPage')
-							}
-							else{
-								res.redirect('/expense')
-							}
-						})
-					}
-				})
-			}
+	if(!session.userid)
+		return res.redirect('/login')
+	var expenseId = req.query.id
+	var expenseAmount = req.query.amount
+	retrieve.thisExpense(expenseId,(err,fund)=>{
+		if(err)
+			res.redirect('/errorPage')
+		upload.adjustFundCapitol(fund[0].fundId,expenseAmount,(err)=>{
+			if(err)
+				return res.redirect('/errorPage')
+
+			remove.expense(expenseId,(err)=>{
+				if(err)
+					return res.redirect('/errorPage')
+				res.redirect('/expense')
+			})
 		})
-	}
-	else{
-		res.redirect('/login')
-	}
+	})
 })
 app.get('/deleteIncome',(req,res)=>{
 	session = req.session
-	if(session.userid){
-		var incomeId = req.query.id
-		remove.income(incomeId,(success)=>{
-			if(!success){
-				res.redirect('/errorPage')
-			}
-			else{
-				res.redirect('/income')
-			}
-		})
-	}
-	else{
-		res.redirect('/login')
-	}
+	if(!session.userid)
+		return res.redirect('/login')
+	var incomeId = req.query.id
+	remove.income(incomeId,(err)=>{
+		if(err)
+			res.redirect('/errorPage')
+		res.redirect('/income')
+	})
+
 })
 app.get('/logout',(req,res)=>{
 	req.session.destroy();
