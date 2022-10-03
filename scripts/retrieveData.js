@@ -48,8 +48,7 @@ function thisFund(fundId,income,callback){
   })
 }
 function fundSelectBar(callback){
-    let sql = "select fundName,fundId from FUND where fundId not in("
-    sql += process.env.DELETEFUND + ")"
+    let sql = "select fundName,fundId from FUND"
     start.query(sql,(err,result)=>{
       if(err)
         return callback(err)
@@ -58,7 +57,7 @@ function fundSelectBar(callback){
 
 }
 function funds(callback){
-  let sql = "select * from FUND where fundId not in("+process.env.DELETEFUND+")"
+  let sql = "select * from FUND";
   start.query(sql,(err,result)=>{
     if(err)
       return callback(err)

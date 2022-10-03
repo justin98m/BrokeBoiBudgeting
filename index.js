@@ -59,7 +59,7 @@ app.get('/',(req,res) => {
 	}
 	retrieve.funds((err,funds)=>{
 		if(err)
-			return res.redirect('/errorPage')
+			console.log(err);
 		for(i=0;i<funds.length;i++){
 			totalCapitol += funds[i].capitol
 		}
@@ -208,6 +208,9 @@ app.post('/login',(req,res)=>{
 		res.redirect('/')
 	}
 	else{
+		console.log(pass );
+		console.log(session);
+
 		res.redirect('/login')
 	}
 })

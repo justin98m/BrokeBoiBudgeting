@@ -7,7 +7,7 @@ const retrieve = require('./retrieveData.js')
 function funds(fundId,callback){
   setFundDeleted(fundId,(err)=>{
     if(err)
-      return callback(true)
+      return callback(err)
     var sql = sqlString.format("delete from FUND where fundId=?",fundId)
     start.query(sql,(err,result)=>{
       if(err)
@@ -53,7 +53,7 @@ function setFundDeleted(fundId, callback){
   sql = sqlString.format(sql)
   start.query(sql,(err,result)=>{
     if(err)
-      return callback(true)
+      return callback(err)
     callback(null)
   })
 }
