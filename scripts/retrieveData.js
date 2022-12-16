@@ -2,16 +2,21 @@
   This script will retirieve data from sql table based on the called function's
   expected input
 */
-const sqlString = require('sqlstring')
-const start = require('./connect.js')
-const consolidate = require('./consolidateFundIds')
-function income(callback){
-  let sql = "select * from INCOME"
-  start.query(sql,(err,income)=>{
-    if(err)
-      return callback(err)
-    callback(null,income)
-  })
+const sqlString = require('sqlstring');
+const start = require('./connect.js');
+const consolidate = require('./consolidateFundIds');
+
+
+async function income(){
+  return new Promise (function(resolve,reject){
+    let sql = "select * from INCOME"
+    start.query(sql,(err,income)=>{
+      if(err){
+        reject({err});
+      }
+      resolve({income})
+    });
+  });
 }
 function thisIncome(incomeId,callback){
   let sql ="select * from FUND_INCOME where incomeId ="+incomeId +";"

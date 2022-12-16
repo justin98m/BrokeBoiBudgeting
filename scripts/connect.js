@@ -1,5 +1,5 @@
 //module will give access to db connection to other programs
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const dotenv = require('dotenv');
 dotenv.config();
 var pool = mysql.createPool({

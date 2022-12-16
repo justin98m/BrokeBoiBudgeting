@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "author": "Justin Cameron",
   "license": "MIT",
@@ -16,6 +17,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
     "nunjucks": "^3.2.3",
     "sqlstring": "^2.3.2"
   }

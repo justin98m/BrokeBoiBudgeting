@@ -48,9 +48,9 @@ app.get('/errorPage',(req,res) =>{
 	})
 })
 app.get('/',(req,res) => {
-	session = req.session
+	/*session = req.session
 	if(!session.userid)
-		return res.redirect('/login')
+		return res.redirect('/login')*/
 	var totalCapitol = 0
 	if(req.query.success == 'true')
 		var expenseAdded = true
@@ -78,9 +78,9 @@ app.get('/',(req,res) => {
 	})
 })
 app.get('/expense',(req,res) =>{
-	session = req.session
+	/*session = req.session
 	if(!session.userid)
-		return res.redirect('/login')
+		return res.redirect('/login')*/
 	retrieve.expenses((err,expenses)=>{
 		if(err)
 			return res.redirect('/errorPage')
@@ -95,24 +95,26 @@ app.get('/expense',(req,res) =>{
 	})
 })
 app.get('/income',(req,res) => {
-	session = req.session
+	/*session = req.session;
 	if(!session.userid)
-		return res.redirect('/login')
-	retrieve.income((err,income)=>{
-		if(err)
-			return res.redirect('/errorPage')
+		return res.redirect('/login');*/
+	retrieve.income().then((result) =>{
+		if(result.err){
+			return res.redirect('/errorPage');
+		}
 		res.render('income.html',data ={
 			layout: 'layout.html',
 			cssDesktop: 'incomeDesktop.css',
 			cssMobile: 'incomeMobile.css',
-			income: income
+			income: result.income
 		})
-	})
+	});
+
 })
 app.get('/viewIncome',(req,res) =>{
-	session = req.session
+	/*session = req.session
 	if(!session.userid)
-		return res.redirect('/login')
+		return res.redirect('/login')*/
 	let incomeId = req.query.id
 	retrieve.thisIncome(incomeId,(err,income)=>{
 		if(err)
@@ -128,9 +130,9 @@ app.get('/viewIncome',(req,res) =>{
 	})
 })
 app.get('/fund',(req,res) => {
-	session = req.session
+	/*session = req.session
 	if(!session.userid)
-		return res.redirect('/login')
+		return res.redirect('/login')*/
 	if(req.query.success == "true")
 		var fundAdded = true
 	else {
@@ -150,9 +152,9 @@ app.get('/fund',(req,res) => {
 	})
 })
 app.get('/viewFund',(req,res)=>{
-	session = req.session
+	/*session = req.session
 	if(!session.userid)
-		return res.redirect('/login')
+		return res.redirect('/login')*/
 	let fundId = req.query.id
 	retrieve.fundIncomes(fundId,(err,income)=>{
 		if(err)
@@ -184,9 +186,9 @@ app.get('/viewFund',(req,res)=>{
 	})
 })
 app.get('/addIncome',(req,res)=>{
-	session = req.session
+	/*session = req.session
 	if(!session.userid)
-		return res.redirect('/login')
+		return res.redirect('/login')*/
 	retrieve.fundSelectBar((err,result)=>{
 		if(err)
 			return res.redirect('/errorPage')
@@ -201,7 +203,7 @@ app.get('/addIncome',(req,res)=>{
 })
 //I only want the content accessible to me hence the MASTERPASS
 app.post('/login',(req,res)=>{
-	var pass = req.body.pass
+	/*var pass = req.body.pass
 	if (pass == process.env.MASTERPASS){
 		session = req.session
 		session.userid = process.env.USERID
@@ -212,7 +214,8 @@ app.post('/login',(req,res)=>{
 		console.log(session);
 
 		res.redirect('/login')
-	}
+	}*/
+	res.redirect('/')
 })
 app.post('/addFund',(req,res)=>{
 	//fund sets date automatically since user does not need to signify a creation date
@@ -270,9 +273,9 @@ app.post('/addIncome',(req,res)=>{
 	})
 })
 app.get('/deleteFund',(req,res)=>{
-	session = req.session
+	/*session = req.session
 	if(!session.userid)
-		return res.redirect('/login')
+		return res.redirect('/login')*/
 	var fundId = req.query.id
 	remove.funds(fundId,(err)=>{
 		if(err)
@@ -281,9 +284,9 @@ app.get('/deleteFund',(req,res)=>{
 	})
 })
 app.get('/deleteExpense',(req,res)=>{
-	session = req.session
+	/*session = req.session
 	if(!session.userid)
-		return res.redirect('/login')
+		return res.redirect('/login')*/
 	var expenseId = req.query.id
 	var expenseAmount = req.query.amount
 	retrieve.thisExpense(expenseId,(err,fund)=>{
@@ -302,9 +305,9 @@ app.get('/deleteExpense',(req,res)=>{
 	})
 })
 app.get('/deleteIncome',(req,res)=>{
-	session = req.session
+/*	session = req.session
 	if(!session.userid)
-		return res.redirect('/login')
+		return res.redirect('/login')*/
 	var incomeId = req.query.id
 	remove.income(incomeId,(err)=>{
 		if(err)
