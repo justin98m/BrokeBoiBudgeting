@@ -7,7 +7,7 @@ const start = require('./connect.js');
 const consolidate = require('./consolidateFundIds');
 
 
-async function income(){
+function income(){
   return new Promise (function(resolve,reject){
     let sql = "select * from INCOME"
     start.query(sql,(err,income)=>{
@@ -18,16 +18,20 @@ async function income(){
     });
   });
 }
-function thisIncome(incomeId,callback){
-  let sql ="select * from FUND_INCOME where incomeId ="+incomeId +";"
-  sql += "select * from INCOME where incomeId ="+incomeId
-  sqlString.format(sql)
-  start.query(sql,(err,income)=>{
-    if(err)
-      return callback(err)
-    var fundIncome = income[0]
-    fundIds = consolidate.fundIds(fundIncome)
-    fundNames(fundIds,income,callback)
+//Get the income details for a specific income 
+function thisIncome(incomeId){
+  return new Promise((resolve,reject) => {
+    let sql ="select * from FUND_INCOME where incomeId ="+incomeId +";"
+    sql += "select * from INCOME where incomeId ="+incomeId
+    sqlString.format(sql)
+    start.query(sql,(err,income)=>{
+      if(err)
+        reject({err:err});
+      resolve({
+          fundIncome : income[0],
+          income : income[1][0]
+        });
+    })
   })
 }
 function thisFund(fundId,income,callback){
@@ -69,27 +73,32 @@ function funds(callback){
     callback(null,result)
   })
 }
-//category can represent income or expense as
-//a income or expense function may call fundNAmes
-function fundNames(fundId,category,callback){
-  let sql = "select fundName,fundId from FUND where fundId="+fundId[0]
-  for (var i = 1; i < fundId.length; i++) {
-    sql += " or fundid="+fundId[i]
-  }
-  console.log(sql);
-  start.query(sql,(err,fundKey)=>{
-    if(err)
-      return callback(err)
-    callback(null,{fundKey: fundKey,category :category})
-  })
+//Given an array of ids , returns the correlating fund name
+async function fundNames(fundIds){
+  return new Promise((resolve,reject) => {
+    let sql = "select fundName,fundId from FUND where fundId="+fundIds[0]
+    for (var i = 1; i < fundIds.length; i++) {
+      sql += " or fundid="+fundIds[i]
+    }
+    start.query(sql,(err,fund)=>{
+      if(err)
+        return reject({err:err});
+      funds = fund.map((thisFund) => {
+        return {fundName: thisFund.fundName, fundId: thisFund.fundId};
+      })
+      resolve(funds);
+    })
+  });
 }
+
 function expenses(callback){
-  let sql = "select * from EXPENSE"
-  start.query(sql,(err,expense)=>{
-    if(err)
-      return callback(err)
-    var fundIds = consolidate.fundIds(expense)
-    fundNames(fundIds,expense,callback)
+  return new Promise((resolve,reject) =>{
+      let sql = "select * from EXPENSE"
+    start.query(sql,(err,expense)=>{
+      if(err)
+        reject({err:err})
+      resolve(expense);
+    })
   })
 }
 function thisExpense(expenseId,callback){

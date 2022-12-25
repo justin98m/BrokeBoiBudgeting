@@ -77,21 +77,22 @@ app.get('/',(req,res) => {
 		})
 	})
 })
-app.get('/expense',(req,res) =>{
+app.get('/expense',async(req,res) =>{
 	/*session = req.session
 	if(!session.userid)
 		return res.redirect('/login')*/
-	retrieve.expenses((err,expenses)=>{
-		if(err)
-			return res.redirect('/errorPage')
-		res.render('expense.html',data = {
-			layout: 'layout.html',
-			cssDesktop: 'expenseDesktop.css',
-			cssMobile: 'expenseMobile.css',
-			fund: expenses.fundKey,
-			expense: expenses.category,
-			title: 'Here Are Your Expenses',
-		})
+	let expense = await retrieve.expenses();
+	let fund = await retrieve.fundNamesp(consolidate.fundIds(expense));
+	if(expense.err || fund.err){
+		return res.redirect('/errorPage');
+	}
+	res.render('expense.html',data = {
+		layout: 'layout.html',
+		cssDesktop: 'expenseDesktop.css',
+		cssMobile: 'expenseMobile.css',
+		fund: fund,
+		expense: expense,
+		title: 'Here Are Your Expenses',
 	})
 })
 app.get('/income',(req,res) => {
@@ -111,22 +112,29 @@ app.get('/income',(req,res) => {
 	});
 
 })
-app.get('/viewIncome',(req,res) =>{
+app.get('/viewIncome',async(req,res) =>{
 	/*session = req.session
 	if(!session.userid)
 		return res.redirect('/login')*/
 	let incomeId = req.query.id
-	retrieve.thisIncome(incomeId,(err,income)=>{
-		if(err)
-			res.redirect('/errorPage')
-		res.render('viewIncome.html',data={
-			layout:'layout.html',
-			cssDesktop: 'viewIncomeDesktop.css',
-			cssMobile: 'viewIncomeMobile.css',
-			fundIncome : income.category[0],
-			income: income.category[1][0],
-			fund : income.fundKey
-		})
+	let income = await retrieve.thisIncome(incomeId);
+	let fundIds = consolidate.fundIds(income.fundIncome);
+	let fund = await retrieve.fundNames(fundIds);
+	//combine fund names and capitol
+	fund.forEach((thisFund) =>{
+		let idx = income.fundIncome.findIndex(idx => thisFund.fundId === idx.fundId);
+		thisFund.capitol = income.fundIncome[idx].capitol;
+	})
+	console.log(fund);
+	console.log(income.fundIncome);
+	if(income.err || fund.err)
+		res.redirect('/errorPage')
+	res.render('viewIncome.html',data={
+		layout:'layout.html',
+		cssDesktop: 'viewIncomeDesktop.css',
+		cssMobile: 'viewIncomeMobile.css',
+		income: income.income,
+		fund : fund
 	})
 })
 app.get('/fund',(req,res) => {

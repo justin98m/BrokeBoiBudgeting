@@ -19,15 +19,11 @@
       <th>Fund Name</th>
       <th>Capitol Recieved</th>
     </tr>
-  {% for fundIncome in fundIncome %}
     {% for fund in fund %}
-      {% if fund.fundId == fundIncome.fundId %}
         <tr class="row">
           <td class="name">{{fund.fundName}}</td>
-          <td class=dollars>${{fundIncome.capitol}}</td>
+          <td class=dollars>${{fund.capitol}}</td>
         </tr>
-      {%endif%}
-    {%endfor%}
   {% endfor %}
   </table>
   <button type="button" name="{{income.incomeId}}" id="delete">
